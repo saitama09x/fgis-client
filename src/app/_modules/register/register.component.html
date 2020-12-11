@@ -1,0 +1,73 @@
+<div class='container'>
+    <div class='w-75 m-auto'>
+<div class='card'>
+    <div class='card-header'>
+        <h1 class='card-title text-center'>{{ group.name }}</h1>
+    </div>
+    <div class='card-body'>
+    <form [formGroup]="userForm" class="user-form">
+        <div class='row'>
+            <div class='col-md'>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class='photo-wrapper'>
+                    <div class='photo-img'>
+                        <img [src]="photo" />                
+                    </div>
+                    <button type="button" mat-icon-button color="primary" class="upload-btn" aria-label="Browse" (click)="browsePhoto(photoFile)" [disabled]="userForm.disabled">
+                        <mat-icon>insert_photo</mat-icon>
+                    </button>
+                <input type="file" #photoFile style="display: none;" (change)="onPhotoChange($event)" observeFiles accept="image/*" />
+                </div>
+            </div>
+            </div>
+            <div class='col-md'>
+            <div class="form-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" required>
+                    <mat-error *ngIf="userForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>First Name</mat-label>
+                    <input type="text" matInput formControlName="first_name" required>
+                    <mat-error *ngIf="userForm.controls['first_name'].invalid">{{getErrorMessage('first_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text" matInput formControlName="last_name" required>
+                    <mat-error *ngIf="userForm.controls['last_name'].invalid">{{getErrorMessage('last_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Phone</mat-label>
+                    <input type="number" matInput formControlName="phone" required>
+                    <mat-error *ngIf="userForm.controls['phone'].invalid">{{getErrorMessage('phone')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="fill">
+                <mat-label>Birthday</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="bday">
+               <mat-error *ngIf="userForm.controls['bday'].invalid">{{getErrorMessage('bday')}}</mat-error> 
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            </div>
+    </div>
+    </div>
+    </form>
+    </div>
+<div class='card-footer'>
+<div class="d-flex justify-content-end">
+    <mat-spinner [hidden]="!isSavingData" diameter="35" class='mr-2'></mat-spinner>
+    <button [disabled]="isSavingData" type="button" mat-raised-button color="warn" (click)="onRegister()">Register</button>
+</div>
+</div>
+
+</div>
+</div>

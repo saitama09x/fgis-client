@@ -1,0 +1,123 @@
+<div class='card'>
+<div class='card-header'>
+<h3 class='card-title mb-0'>Account</h3>
+</div>
+
+<div class='card-body'>
+<div class='row'>
+<div class='col-md'>
+<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-organization" role="tab" aria-controls="v-pills-home" aria-selected="true">Organization</a>
+  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-profile" aria-selected="false">Account</a>
+  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-security" role="tab" aria-controls="v-pills-messages" aria-selected="false">Security</a>
+</div>
+</div>
+<div class='col-md-9'>
+<div class="tab-content" id="v-pills-tabContent">
+  <div class="tab-pane fade show active" id="v-pills-organization" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+  	  <form class='card bg-light text-dark' [formGroup]="clientForm" (ngSubmit) = "onUpdateCompany(clientForm, client.adminID)" >
+  	  	<div class='card-header'><h4 class='card-title mb-0'>Organization</h4></div>
+  	  		<div class='card-body bg-light'>
+  	  			<div class='row'>
+  	  				<div class='col-md'>
+				        <img [src]="company_logo" class="img-thumbnail"/>                
+				        <div class='d-block'>
+				        <button type="button" mat-icon-button color="primary" aria-label="Browse" (click)="browseLogo(companyLogoFile)" >
+				            <mat-icon>insert_photo</mat-icon>
+				        </button>
+				        <input type="file" #companyLogoFile style="display: none;" observeFiles accept="image/*" (change)="onCompanyLogoChange($event)" />
+				    	</div>
+			   	 	</div>
+
+				  	  <div class='col-md'>
+				        <div class='form-group'>
+					        <mat-form-field appearance="legacy">
+					            <mat-label>Company Name</mat-label>
+					            <input type="text" matInput formControlName="company_name" required>
+					        </mat-form-field>
+					    </div>
+					    <div class='form-group'>
+					    	<button class='btn btn-md btn-primary'>Save</button>
+					    </div>
+				    </div>
+				</div>
+		   </div>
+		</form>
+
+  </div>
+  <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+  	
+  	<form class='card bg-light text-dark' [formGroup]="clientForm" (ngSubmit) = "onUpdateAccount(clientForm, client.adminID)">
+  	  	<div class='card-header'><h4 class='card-title mb-0'>Account</h4></div>
+  	  		<div class='card-body bg-light'>
+  	  			<div class='row'>
+  	  				<div class='col-md'>
+				        <img [src]="profile_pic" class="img-thumbnail"/>    
+				        <div class='d-block'>
+					        <button type="button" mat-icon-button color="primary" aria-label="Browse" (click)="profilepic.click()" >
+					            <mat-icon>insert_photo</mat-icon>
+					        </button>
+					        <input type="file" #profilepic style="display: none;" observeFiles accept="image/*"  (change)="onProfilepicChange($event)"/>
+				    	</div>
+			   	 	</div>
+
+				  	  <div class='col-md'>
+				        <div class='form-group'>
+					        <mat-form-field appearance="legacy">
+					            <mat-label>First Name</mat-label>
+					            <input type="text" matInput formControlName="first_name" required>
+					        </mat-form-field>
+					    </div>
+					    <div class='form-group'>
+					        <mat-form-field appearance="legacy">
+					            <mat-label>Last Name</mat-label>
+					            <input type="text" matInput formControlName="last_name" required>
+					        </mat-form-field>
+					    </div>
+					    <div class='form-group'>
+					        <mat-form-field appearance="legacy">
+					            <mat-label>Email</mat-label>
+					            <input type="text" matInput formControlName="email" required>
+					        </mat-form-field>
+					    </div>
+					    <div class='form-group'>
+					        <mat-form-field appearance="legacy">
+					            <mat-label>Phone</mat-label>
+					            <input type="text" matInput formControlName="phone" required>
+					        </mat-form-field>
+					    </div>
+					    <div class='form-group'>
+					    	<button class='btn btn-md btn-primary'>Save</button>
+					    </div>
+				    </div>
+				</div>
+		   </div>
+		</form>
+
+
+  </div>
+  <div class="tab-pane fade" id="v-pills-security" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+  	
+  	<form class='card bg-light text-dark' [formGroup]="clientForm" (ngSubmit) = "onUpdatePassword(clientForm, client.adminID)">
+  	  	<div class='card-header'><h4 class='card-title mb-0'>Security</h4></div>
+  	  		<div class='card-body bg-light'>
+  	  			<div class='form-group'>
+			        <mat-form-field appearance="legacy">
+			            <mat-label>Password</mat-label>
+			            <input type="password" matInput formControlName="password" required>
+			        </mat-form-field>
+			    </div>
+			     <div class='form-group'>
+			    	<button class='btn btn-md btn-primary'>Save</button>
+			    </div>
+  	  		</div>
+  	  	</form>
+
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>

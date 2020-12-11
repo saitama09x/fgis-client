@@ -1,0 +1,128 @@
+mat-label {
+    color: white;
+}
+
+.export-form {
+    margin: 10px;
+}
+   
+mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.face-card{
+	/*background-color: white;
+    padding: 0px;
+    border-radius: 5px;
+    border: solid 1px #000;*/
+}
+
+.face-card .row{
+    padding: 10px;
+}
+
+.w-border{
+    border-bottom: 1px dotted rgb(183 183 183);
+    padding-bottom: 8px;
+}
+
+.avatar-rounded{
+	overflow: hidden;
+    height: 170px;
+    width: 190px;
+    border-radius: 5px;
+    position: relative;
+    background-color: #000;
+    margin: auto;
+    border: 2px solid rgb(100 100 100);
+}
+
+.customer-img{
+	width:100%;
+    position: absolute;
+    top: 0px;
+    left:0px;
+    height: 100%;
+}
+
+.switch-btn{
+    width: 150px;
+    height: 32px;
+    position: relative;
+    overflow: hidden;
+    border: solid 1px #fff;
+    border-radius: 10px;
+    margin-right:10px;
+}
+
+.switch-btn .switch-img{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: solid 1px #000;
+    border-radius: 10px;
+    overflow: hidden;
+    top: 0px;
+    left:0px;
+    transition: left .5s;
+    transition-timing-function: ease;
+}
+
+.switch-img img{
+    width:100%;
+}
+
+.switch-btn.active{
+    background-color:#5bad5b;   
+    color:white; 
+}
+
+.switch-btn.active .switch-img{
+    left:120px !important;
+}
+
+.switch-label{
+    color:#fff;
+    text-align: right;
+    margin-top: 6px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.switch-btn.active .switch-label{
+    color:white;   
+}
+
+.w-feat{
+    position:relative;
+}
+
+.w-feat .tooltip_mask, .w-feat .tooltip_glass, .w-feat .tooltip_beard{
+    position: absolute;
+    width: 130px;
+    left: -37px;
+    top: -22px;
+    background-color: blue;
+    padding: 2px;
+    text-align: center;
+    z-index:9;
+    display:none
+}
+
+.w-feat .tooltip_mask.active, .w-feat .tooltip_glass.active, .w-feat .tooltip_beard.active{
+    display:block;
+}
+
+.swal2-content{
+    padding:0px;
+}
+
+.face-card:hover{
+    -webkit-box-shadow: 0px 0px 5px 4px #dedddd52; 
+    box-shadow: 0px 0px 5px 4px #dedddd52;
+}
+
+.face-card.card2{
+    background-color:#7d7d7d33;
+}

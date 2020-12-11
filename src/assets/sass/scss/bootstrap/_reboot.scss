@@ -1,0 +1,136 @@
+/* Google Font*/
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+
+html {
+  font-family: $font-family-base;
+  height: 100vh;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  //-ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: $font-family-base;
+  background: #000;
+  font-size: 15px;
+  color: $body-color;
+  letter-spacing: 0.5px;
+}
+
+[tabindex="-1"]:focus {
+  outline: 0 !important;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+select option {
+  background: #000;
+}
+
+::placeholder {
+  color: #fff !important;
+  font-size: 13px;
+  opacity: 0.5 !important;
+
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #fff !important;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #fff !important;
+}
+
+#wrapper {
+  width: 100%;
+  position: relative;
+}
+
+/* Page Content Wrapper */
+
+.content-wrapper {
+  margin-left: 250px;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow-x: hidden;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+  margin-top: $spacer;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: $font-family-base;
+  //font-weight: 600;
+  color: #fff;
+}
+
+.serif-font {
+  font-family: $font-family-sans-serif;
+}
+
+p {
+  margin-bottom: 0.65rem;
+}
+
+:focus {
+  outline: 0 !important;
+}
+
+a {
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  &.text-muted {
+    &:focus,
+    &:hover {
+      color: #748690;
+    }
+  }
+}
+
+label {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}

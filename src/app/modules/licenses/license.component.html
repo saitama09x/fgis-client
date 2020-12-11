@@ -1,0 +1,67 @@
+<div class='container-fluid'>
+	<div class='row'>
+		<div class='col-md-7'>
+			<div class='card'>
+				<div class='card-body'>
+					<ngx-datatable
+					    class="bootstrap"
+					    [loadingIndicator]="loadingIndicator"
+					    [rows]="dt_rows"
+					    [columns]="dt_columns"
+					    [columnMode]="'force'"
+					    [headerHeight]="50"
+					    [footerHeight]="50"
+					    rowHeight="auto"
+					    selectionType="single"
+					    [count]="dt_totalrows"
+					    [limit]="dt_limit"
+				    >
+					</ngx-datatable>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-5'>
+			<div class='card'>
+				<div class='card-header'>
+					<h2 class='card-title mb-0'>Add New License</h2>
+				</div>
+				<div class='card-body'>
+					<div class='form-group px-2'>
+						<label>License Title</label>
+						<input type='text' class='form-control' />
+					</div>
+					<div class='form-group px-2'>
+						<label>Description</label>
+						<input type='text' class='form-control' />
+					</div>
+					<div class='form-group d-flex justify-between'>
+						<div class='px-2'>
+							<label>Date Start</label>
+							<input type='text' class='form-control' />
+						</div>
+						<div class='px-2'>
+							<label>Date Expiration</label>
+							<input type='text' class='form-control' />
+						</div>
+					</div>
+					<div class='form-group d-flex align-items-end'>
+						<div class='px-2'>
+						<label>License File</label>
+						<input type='text' class='form-control' />
+						</div>
+						<div class='px-2'>
+							<button class='btn btn-md btn-primary'>Upload</button>
+						</div>
+					</div>
+					<div class='form-group px-2 w-50'>
+						<label>Number of devices</label>
+						<input type='text' class='form-control' />
+					</div>
+					<div class='form-group px-2 d-flex justify-content-center'>
+						<button class='btn btn-primary btn-lg'>Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

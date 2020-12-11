@@ -1,0 +1,123 @@
+<div class='container-fluid'>
+
+	<div class='row mb-3'>
+		 <div class="col">
+		    <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="'/visitor-groups'">Visitor Groups</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">Users</a></li>
+         </ol>
+	   </div>
+		<div class='col'>
+			<div class='d-flex'>
+				<button type='button' class='btn btn-md btn-white mr-3 w-50' (click)="addNewUser()">Add Users</button>
+				<input type='text' class='form-control' placeholder="Search User:" (keyup)="onSearch($event)"/>
+			</div>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col'>
+			<div class='card'>
+				<div class='card-body'>
+					<ngx-datatable
+				    class="bootstrap"
+				    [loadingIndicator]="loadingIndicator"
+				    [rows]="dt_rows"
+				    [columns]="dt_columns"
+				    [columnMode]="'force'"
+				    [headerHeight]="50"
+				    [footerHeight]="50"
+				    rowHeight="auto"
+				    selectionType="single"
+				    [count]="dt_totalrows"
+				    [limit]="dt_limit"
+				    (select)="onSelect($event)"
+				    >
+				    <ngx-datatable-column prop="photo" name="Photo">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			        <div class='dt-avatar'>
+			        	<img [src]="(value == '' ) ? '/assets/photo_default.png' : '/users/photo/' + value.trim()" width="100%"/>
+			    	</div>
+			      </ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column prop="fullname" name="Full Name">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			        <strong>{{ value.trim() }}</strong>
+			      </ng-template>
+				</ngx-datatable-column>
+				<ngx-datatable-column prop="emailadd" name="Email">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			        <strong>{{ value.trim() }}</strong>
+			      </ng-template>
+				</ngx-datatable-column>
+				    </ngx-datatable>
+				</div>
+			</div>
+		</div>
+		<div class='col'>
+			<form [formGroup]="form" method="PUT" >
+			<div class='card'>
+				<div class='card-body'>
+					<div class='avatar-wrapper'>
+						<div class='avatar-img'>
+							<img [src]="photoUrl" />
+						</div>
+						<div *ngIf="is_edit==true">
+							<button type="button" mat-icon-button color="primary" aria-label="Browse" (click)="browseImage(profileImg)">
+					            <mat-icon>insert_photo</mat-icon>
+					        </button>
+					         <input type="file" #profileImg style="display: none;" observeFiles accept="image/*" (change)="onProfileChange($event)"/>
+						</div>
+					</div>
+					<div class="form-group text-center">
+						<label>Quality Check: <strong>{{quality}}</strong></label>
+					</div>
+					<div class='form-group d-flex justify-content-center' *ngIf="loading==true">
+						<img src="/assets/ajax-loader.gif" />
+					</div>
+					<div class='form-group'>
+						<div class="alert alert-danger alert-dismissible" role="alert" *ngIf="has_lower_quality==true">
+					    <button type="button" class="close" (click)="dismissAlert()">×</button>
+						<div class="alert-message">
+						  <span><strong>Please change with higher quality of face image.</strong></span>
+						</div>
+					  </div>
+					</div>
+					<div class='form-group'>
+						<label>First Name</label>
+						<input type='text' class='form-control' matInput formControlName="fname" />
+					</div>
+					<div class='form-group'>
+						<label>Last Name</label>
+						<input type='text' class='form-control' matInput formControlName="lname" />
+					</div>
+					<div class='form-group'>
+						<label>Gender</label>
+						<select class='form-control' formControlName="gender">
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+						</select>
+					</div>
+					<div class='form-group'>
+						<label>Age</label>
+						<input type='number' class='form-control' matInput formControlName="age" />
+					</div>
+					<div class='form-group'>
+						<label>Email</label>
+						<input type='text' class='form-control' matInput formControlName="emailadd" />
+					</div>
+					<div class='form-group'>
+						<label>Phone</label>
+						<input type='text' class='form-control' matInput formControlName="phone" />
+					</div>
+				</div>
+				<div class='card-footer'>
+					<img src="/assets/ajax-loader.gif" class='mr-2' *ngIf="loading_submit==true"/>
+					<button type='button' *ngIf="is_edit==false && has_selected==true" class='btn btn-white btn-md mr-2' (click)="onEdit()">Edit</button>
+					<button type='button' *ngIf="is_edit==true && has_selected==true" class='btn btn-warning btn-md' (click)="onUpdate()">Update</button>
+					<button type='button' *ngIf="has_selected==true" class='btn btn-md btn-danger' (click)="deleteUser()">Delete</button>
+				</div>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>

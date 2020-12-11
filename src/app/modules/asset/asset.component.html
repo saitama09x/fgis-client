@@ -1,0 +1,235 @@
+<mat-drawer-container style="height: 100%;">
+    <mat-drawer-content style="overflow: hidden;">
+        <h2 matSubheader>Assets</h2>
+
+        <mat-slide-toggle id="previewToggle" [disabled]="isSavingData" [(ngModel)]="isPreviewMode" (change)="onPreviewModeChange()">Preview Mode: {{ isPreviewMode ? "On" : "Off"}}</mat-slide-toggle>
+
+        <div id="assetsTreeContainer" style="width: 100%;">
+            <section id="assets-tree" style="height: 100%;"></section>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12" class="modal-footer" style="border: none;">                
+                <button [disabled]="isSavingData" [disabled]="isPreviewMode" mat-raised-button color="primary" (click)="onSaveAssets()" style="margin-left: 10px;">Save</button>
+                <button [disabled]="isSavingData" [disabled]="isPreviewMode" mat-raised-button color="primary" (click)="onPublish()" style="margin-left: 10px;">Publish</button>
+                <mat-spinner [hidden]="!isSavingData" diameter="35"></mat-spinner>
+            </div>
+        </div>
+    </mat-drawer-content>
+
+    <mat-drawer mode="side" position="end" [opened]="assetSideOpened">
+        <div fxLayout="row" fxLayoutAlign="space-between none" style="margin-bottom: 20px;">
+            <button mat-icon-button [disabled]="isSavingData" color="accent" aria-label=""Close (click)="onSidebarClose()">
+                <mat-icon>close</mat-icon>
+            </button>            
+
+            <button [disabled]="isSavingData" [hidden]="isPreviewMode" mat-raised-button color="warn" (click)="onDeleteAsset()">Clear</button>
+        </div>
+
+        <ng-container [ngTemplateOutlet]="assetContainer">                                     
+        </ng-container>   
+    </mat-drawer>    
+</mat-drawer-container>
+
+<button class="invisible" id="btnAsset1" (click)="onAssetClick(1)">Asset 1</button>
+<button class="invisible" id="btnAsset2" (click)="onAssetClick(2)">Asset 2</button>
+<button class="invisible" id="btnAsset3" (click)="onAssetClick(3)">Asset 3</button>
+<button class="invisible" id="btnAsset4" (click)="onAssetClick(4)">Asset 4</button>
+<button class="invisible" id="btnAsset5" (click)="onAssetClick(5)">Asset 5</button>
+<button class="invisible" id="btnAsset6" (click)="onAssetClick(6)">Asset 6</button>
+<button class="invisible" id="btnAsset7" (click)="onAssetClick(7)">Asset 7</button>
+<button class="invisible" id="btnAsset8" (click)="onAssetClick(8)">Asset 8</button>
+<button class="invisible" id="btnAsset9" (click)="onAssetClick(9)">Asset 9</button>
+<button class="invisible" id="btnAsset10" (click)="onAssetClick(10)">Asset 10</button>
+<button class="invisible" id="btnAsset11" (click)="onAssetClick(11)">Asset 11</button>
+<button class="invisible" id="btnAsset12" (click)="onAssetClick(12)">Asset 12</button>
+<button class="invisible" id="btnAsset13" (click)="onAssetClick(13)">Asset 13</button>
+<button class="invisible" id="btnAsset14" (click)="onAssetClick(14)">Asset 14</button>
+<button class="invisible" id="btnAsset15" (click)="onAssetClick(15)">Asset 15</button>               
+
+<ng-template #assetTemplate>
+    <form class="form-horizontal" role="form" #assetFormControl="ngForm">
+        <div class="row" style="margin-left: 20px; margin-right: 20px;">
+            <div class="col-lg-12">            
+                <mat-form-field appearance="legacy">
+                    <mat-label>Title</mat-label>
+                    <input type="text" [disabled]="isSavingData" matInput name="title" [(ngModel)]="asset.title">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-12"> 
+                <mat-form-field appearance="legacy">
+                    <mat-label>Description</mat-label>
+                    <input type="text" [disabled]="isSavingData" matInput id="desc" name="desc" [(ngModel)]="asset.desc">
+                </mat-form-field>
+            </div>    
+        </div>        
+        <div [hidden]="wallpaperHidden" class="input-group" style="margin-top: 5px;">
+            <label class="control-label col-sm-12" for="wallpaper" style="text-align: center;">Wallpaper</label>
+            <div class="col-sm-12">
+                <ng-container [ngTemplateOutlet]="wallpaperContainer">                                     
+                </ng-container>                        
+            </div>
+        </div>            
+        <div class="input-group" style="margin-top: 5px;">
+            <label class="control-label col-sm-12" for="video" style="text-align: center;">Video</label>
+            <div class="col-sm-12" appDragAndDrop ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+                <ng-container [ngTemplateOutlet]="videoContainer">                    
+                </ng-container>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <mat-accordion [hidden]="isTriggerOptionHidden">
+                <mat-expansion-panel >
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Distance</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Minimum</mat-label>
+                                <input type="text" [disabled]="isSavingData" matInput id="distance_min" name="minimum" [(ngModel)]="asset.distance_min">
+                            </mat-form-field>        
+                        </div>
+
+                        <div class="col-sm=6">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Maximum</mat-label>
+                                <input type="text" [disabled]="isSavingData" matInput id="distance_max" name="maximum" [(ngModel)]="asset.distance_max">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Gestures</mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="form-container">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Facial</mat-label>
+                            <select matNativeControl [disabled]="isSavingData" id="facial_gestures" name="facial_gestures" [(ngModel)]="asset.facial_gestures">
+                                <option value="">None</option>
+                                <option *ngFor="let facialExpression of filteredFacialExpressions" 
+                                    [value]="facialExpression.code"
+                                    [attr.selected]="facialExpression.code == asset.facial_gestures ? true : null">
+                                    {{ facialExpression.name }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-container">
+                        <mat-form-field appearance="legacy">
+                            <mat-label>Body</mat-label>
+                            <select matNativeControl [disabled]="isSavingData" id="body_gestures" name="body_gestures" [(ngModel)]="asset.body_gestures">
+                                <option value="">None</option>
+                                <option *ngFor="let bodyGesture of filteredBodyGestures" 
+                                    [value]="bodyGesture.code"
+                                    [attr.selected]="bodyGesture.code == asset.body_gestures ? true : null">
+                                    {{ bodyGesture.name }}
+                                </option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Gender</mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field appearance="legacy">
+                        <mat-label>Gender</mat-label>
+                        <select matNativeControl [disabled]="isSavingData" id="gender" name="gender" [(ngModel)]="asset.gender">
+                            <option value="">None</option>
+                            <option value="Male" [attr.selected]="asset.gender == 'Male' ? true : null">Male</option>
+                            <option value="Female" [attr.selected]="asset.gender == 'Female' ? true : null">Female</option>
+                        </select>
+                    </mat-form-field>
+                </mat-expansion-panel>
+            </mat-accordion>       
+        </div>                                       
+    </form>
+</ng-template>
+
+<ng-template #wallpaperBrowseTemplate>
+    <div class="row upload-container" appDragAndDrop (fileDropped)="onFileDropped($event)">
+        <div class="col-sm-3">
+            <input type="file" #wallpaperFile id="wallpaperFile" name="wallpaperFile" style="display: none;" (change)="onFileChange($event)" [(ngModel)]="asset.wallpaper_file" observeFiles accept="image/*" />
+            <img src="./assets/ic-upload-file.svg" alt="">
+        </div>
+        <div class="col-sm-9">
+            <h3>Drag and drop image here</h3>
+            <hr/>
+            <button class="btn btn-primary" [disabled]="isSavingData" (click)="onBrowse(wallpaperFile)">Browse for photo</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #wallpaperViewTemplate>
+    <div style="position: relative; left: 0; top: 0; text-align: center;">
+        <img [src]="wallpaper" style="height: 240px; max-width: 320px; position: relative; top: 0; left: 0; z-index: 1;" />
+        <button mat-mini-fab [disabled]="isSavingData" color="warn" aria-label="Delete Video" style="position: absolute; top:0px; left: 320px; z-index: 2;" (click)="clearWallpaper()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #videoBrowseTemplate>
+    <div class="row upload-container">
+        <div class="col-sm-3">
+            <img class="upload-ico" src="./assets/ic-upload-file.svg" alt="">
+        </div>
+        <div class="col-sm-8">
+            <h3>Drag and drop video here</h3>
+            <hr/>
+            <button class="btn btn-primary" [disabled]="isSavingData" (click)="onBrowse(videoFile)">Browse for video</button>            
+        </div>
+    </div>
+</ng-template>
+
+<input type="file" #videoFile id="video" name="video" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" observeFiles accept="video/*">
+
+<ng-template #videoViewTemplate>
+    <div style="text-align: center;">
+        <video width="320" style="position: relative; top: 0; left: 0; z-index: 1;" [src]="video" controls></video>
+        <button mat-mini-fab [disabled]="isSavingData" color="warn" aria-label="Delete Video" style="position: absolute; top:0px; left: 320px; z-index: 2;" (click)="clearVideo()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #previewTemplate>
+    <div class="container">
+        <form class="form-horizontal" role="form" #previewFormControl="ngForm">
+            <div style="text-align: center;">
+                <img style="height: 240px;" src="{{ wallpaperPreview }}" [hidden]="wallpaperPreviewHidden" />
+            </div>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <video width="320" src="{{ videoPreview }}" controls></video>
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <h4 style="font-weight: bold;">PREVIEW</h4>
+            </div>
+
+            <div style="margin: 10px;">
+                <mat-form-field appearance="legacy" style="width: 100%;">
+                    <select matNativeControl required (change)="onAssetPreviewChange($event)" id="asset-sel" name="asset-sel">
+                        <option *ngFor="let assetPreview of assets" [value]="assetPreview.seq">{{ assetPreview.title }}</option>
+                    </select>
+                </mat-form-field>
+                
+                <div *ngFor="let action of actionsPreview" style="margin-top: 20px;">
+                    <label><input type="radio" name="action-option" [value]="action.seq" (change)="onActionOptionChange($event)" /> {{ action.desc }}</label>                                
+                </div>
+                <div style="margin-top: 10px;">                                        
+                    <button [hidden]="previewOkHidden" mat-raised-button color="primary" (click)="onPreviewOk()">OK</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -1,0 +1,13 @@
+<div id="wrapper" [ngClass]="{'nav-collapsed' : getSideBarState()}">
+	<app-sidebar [company_logo]="(upload$ | async).company_logo" [company_name]="(account$|async).company_name"></app-sidebar>
+	<app-navbar [profile_pic]="(upload$ | async).profile_pic" [profile_name]="(account$|async).fname + ' ' + (account$|async).lname"></app-navbar>
+	<div class="clearfix"></div>
+	<div class="content-wrapper">
+		<div class="container-fluid">
+			<router-outlet></router-outlet>
+			<div class="overlay" (click)="toggleSidebar()" [ngClass]="{'show' : getSideBarState()}"></div>
+		</div>
+	</div>
+	<app-footer></app-footer>
+	<!--<app-color-switcher></app-color-switcher>-->
+</div>

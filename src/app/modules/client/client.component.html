@@ -1,0 +1,178 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<h4 class="page-title">Clients</h4>
+	</div>
+	<div class="col-sm-3" style="text-align: right;">
+		<button mat-fab color="primary" aria-label="Add" (click)="onCreateClient(content)">
+            <mat-icon>add</mat-icon>
+        </button>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">        
+        <section class="panel">
+            <table class="table" id="table">
+                <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Company</th>
+                        <th>Admin</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="clients">                        
+                    <tr *ngFor="let client of clients">
+                        <td><img src="{{ client.company_logo ? '/users/logo/'+ client.company_logo : '/assets/logo_default.png' }}" height="40px"></td>
+                        <td>{{ client.company_name }}</td>
+                        <td>{{ client.admin.first_name }} {{ client.admin.last_name }}</td>
+                        <td>{{ client.admin.email }}</td>
+                        <td>{{ client.admin.phone }}</td>
+                        <td>
+                            <button mat-icon-button color="primary" aria-label="Edit" (click)="onEditClient(content, client)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" aria-label="Settings" (click)="onSettings(settingsContent, client)">
+                                <mat-icon>settings</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" aria-label="Delete" (click)="onDeleteClient(client)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>                
+            </table>            
+        </section> 
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header" id="modal-client">
+      <h2 class="modal-title">{{ modalTitle }}</h2>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div [formGroup]="clientForm" class="client-form">
+
+            <h4 class='bg-primary text-white p-2'>Organization</h4>
+
+            <div class="form-container input-group">
+                <img [src]="company_logo" style="max-height: 100px;" />                
+                <button mat-icon-button color="primary" style="margin-top: 70px;" aria-label="Browse" (click)="browseLogo(companyLogoFile)" [disabled]="clientForm.disabled">
+                    <mat-icon>insert_photo</mat-icon>
+                </button>
+                <input type="file" #companyLogoFile style="display: none;" (change)="onCompanyLogoChange($event)" observeFiles accept="image/*" />
+            </div>
+
+
+            <div class="form-container" style="margin-top: 20px;">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Company Name</mat-label>
+                    <input type="text" matInput formControlName="company_name" required>
+                    <mat-error *ngIf="clientForm.controls['company_name'].invalid">{{getErrorMessage('company_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            
+            <h4 class='bg-primary text-white p-2'>Primary Account</h4>
+
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" required>
+                    <mat-error *ngIf="clientForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>First Name</mat-label>
+                    <input type="text" matInput formControlName="first_name" required>
+                    <mat-error *ngIf="clientForm.controls['first_name'].invalid">{{getErrorMessage('first_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text" matInput formControlName="last_name" required>
+                    <mat-error *ngIf="clientForm.controls['last_name'].invalid">{{getErrorMessage('last_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Phone</mat-label>
+                    <input type="number" matInput formControlName="phone" required>
+                    <mat-error *ngIf="clientForm.controls['phone'].invalid">{{getErrorMessage('phone')}}</mat-error>  
+                </mat-form-field>
+            </div>
+
+            <h4 class='bg-primary text-white p-2'>Security</h4>
+
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password" required>
+                    <mat-error *ngIf="clientForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>  
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <mat-spinner [hidden]="!isSavingData" diameter="35"></mat-spinner>
+        <button [hidden]="isSavingData" type="button" class="btn btn-outline-dark" (click)="onSaveClient(modal)" [disabled]="!clientForm.valid">Save</button>
+    </div>
+</ng-template>
+
+<ng-template #settingsContent let-modal>
+    <div class="modal-header" id="modal-settings">
+      <h2 class="modal-title">Settings</h2>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="background-color: grey;">
+        <h2>Features</h2>
+        <div style="margin: 10px;">
+            <div>
+                <mat-checkbox [(ngModel)]="client.user_reg" [checked]="client.user_reg">User Registration</mat-checkbox>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <mat-checkbox [(ngModel)]="client.wifi_beacon" [checked]="client.wifi_beacon">Wifi Beacon</mat-checkbox>
+                <div style="margin-left: 20px;">
+                    <div *ngFor="let wifiBeacon of wifiBeacons">
+                        <mat-checkbox [disabled]="!client.wifi_beacon" [(ngModel)]="wifiBeacon.selected" [checked]="wifiBeacon.selected">{{ wifiBeacon.name }}</mat-checkbox>
+                    </div>
+                </div>
+            </div>            
+            <div>
+                <mat-checkbox [(ngModel)]="client.tracking" [checked]="client.tracking">Tracking</mat-checkbox>
+                <div style="margin-left: 20px;">
+                    <div *ngFor="let tracking of trackings">
+                        <mat-checkbox [disabled]="!client.tracking" [(ngModel)]="tracking.selected" [checked]="tracking.selected">{{ tracking.deviceName }}</mat-checkbox>                        
+                        <div style="margin-left: 20px;">
+                            <mat-checkbox [disabled]="true" [checked]="true">Basic Tracking</mat-checkbox>
+                            <mat-checkbox [disabled]="!client.tracking" [(ngModel)]="tracking.live_tracking" [checked]="tracking.live_tracking" style="margin-left: 20px;">Live Tracking</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label>Campaign</label>
+                <div style="margin-left: 20px;">
+                    <div>
+                        <mat-checkbox [(ngModel)]="client.fr_inter_video" [checked]="client.fr_inter_video">FR Interactive Video</mat-checkbox>
+                    </div>
+                    <div>
+                        <mat-checkbox [(ngModel)]="client.smileToVote" [checked]="client.smileToVote"><p style="text-transform: none; padding-top: 10px;">SmileToVote</p></mat-checkbox>
+                    </div> 
+                </div>
+            </div>                       
+        </div>
+    </div>
+    <div class="modal-footer">
+        <mat-spinner [hidden]="!isSavingData" diameter="35"></mat-spinner>
+        <button [hidden]="isSavingData" type="button" class="btn btn-outline-dark" (click)="onSaveSettings(modal)">Save</button>
+    </div>
+</ng-template>

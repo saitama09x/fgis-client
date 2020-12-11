@@ -1,0 +1,93 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">Campaign</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javaScript:;">FR Interactive Video</a>
+            </li>
+		</ol>
+	</div>
+	<div class="col-sm-3">
+	</div>
+</div>
+
+<div class="row">   
+    <div class="col-lg-12">
+        <div class="row main-container">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <table class="table" id="table">
+                        <thead>
+                        <tr>
+                            <th>Campaign</th>
+                            <th>Camera</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="campaigns">                        
+                            <tr *ngFor="let campaign of campaigns">
+                                <td>{{ campaign.title }}</td>
+                                <td>{{ campaign.cameraName }}</td>
+                                <td>{{ campaign.status == 2 ? 'Completed' : 'Work in Progress' }}</td>
+                                <td>{{ campaign.updated_at | date:"dd/MM/yyyy"}}</td>
+                                <td>
+                                    <button mat-icon-button color="primary" aria-label="Edit" (click)="onEditCampaign(content, campaign)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="primary" aria-label="Assets" routerLink="{{campaign.campaignID +'/assets'}}">
+                                        <mat-icon>filter_list</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="warn" aria-label="Delete" (click)="onDeleteCampaign(campaign)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>                
+                    </table>
+                </section>
+            </div>    
+        </div>             
+    </div>    
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header" id="modal-campaign">
+      <h4 class="modal-title">{{ modalTitle }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="campaignForm" class="campaign-form">
+        <div class="form-container">
+            <mat-form-field appearance="legacy">
+                <mat-label>Title</mat-label>
+                <input type="text" matInput formControlName="title" required>
+                <mat-error *ngIf="campaignForm.controls['title'].invalid">{{getErrorMessage('title')}}</mat-error>  
+            </mat-form-field>
+        </div>
+        <div class="form-container">
+            <mat-form-field appearance="legacy">
+                <mat-label>Description</mat-label>
+                <input type="text" matInput formControlName="desc" required>
+                <mat-error *ngIf="campaignForm.controls['desc'].invalid">{{getErrorMessage('desc')}}</mat-error>  
+            </mat-form-field>
+        </div>
+        <div class="form-container">
+            <mat-form-field appearance="legacy">
+                <mat-label>Camera</mat-label>
+                <select formControlName="cameraID" matNativeControl required>
+                    <option *ngFor="let camera of cameras" [value]="camera.cameraID">{{ camera.name }}</option>
+                </select>
+                <mat-error *ngIf="campaignForm.controls['cameraID'].invalid">{{getErrorMessage('cameraID')}}</mat-error>  
+            </mat-form-field>
+        </div>      
+      </form>
+    </div>
+    <div class="modal-footer">
+        <mat-spinner [hidden]="!isSavingData" diameter="35"></mat-spinner>
+        <button type="button" class="btn btn-outline-dark" (click)="onSaveCampaign(modal)" [disabled]="!campaignForm.valid">Save</button>
+    </div>
+</ng-template>

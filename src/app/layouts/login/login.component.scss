@@ -1,0 +1,109 @@
+.login-container {
+    width: 1024px; 
+    height: 576px; 
+    padding-left: 0px; 
+    text-align: center; 
+    background-image: url('/assets/login_bg.jpg');
+}
+
+.login-sub-container {
+    width: 350px; 
+    padding-top: 20px; 
+    margin: 0px;
+}
+
+.app-name-container {
+    padding-right: 40px; 
+    padding-top: 25px;
+}
+
+.app-name {
+    font-size: 12pt;
+    color: #3769CD;
+}
+
+.error-msg {
+    color: red; 
+    text-align: center; 
+    font-size: 10pt;
+}
+
+.login-wrap {
+    margin: 10px;
+    width: 400px;
+    text-align: right;
+}
+
+.forgot-links {
+    width: 100%; 
+    text-align: center; 
+    font-size: 10pt; 
+    padding-top: 20px;
+
+    span {
+        padding-left: 5px; 
+        padding-right: 5px;
+    }
+}
+
+input {
+    border: none;
+    background-color: transparent;
+    font-size: 11pt;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+}
+
+.fa {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    color: blue;
+}
+
+.input-group{
+    border: 1px rgb(175, 175, 175) solid;
+    border-radius: 25px 25px 25px 25px;
+    padding: 6px;
+    margin-bottom: 20px;
+    width: 280px;
+
+    -moz-box-shadow:    inset 0 0 4px gray;
+    -webkit-box-shadow: inset 0 0 4px gray;
+    box-shadow:         inset 0 0 4px gray;
+}
+
+a { color: gray; }
+
+.signin-container {
+    text-align: center; 
+    padding-top: 20px;
+
+    button {
+        color: white;
+        width: 183px;
+        height: 44px;
+        border-radius: 21.5px;
+        border-color: #3769CD;
+        background-color:#3769CD;
+        padding: 8px 16px;
+        font-size: 12pt;
+    }
+}
+
+.footer-container {
+    width: 100%; 
+    text-align: left; 
+    font-size: 9pt; 
+    padding-top: 80px; 
+    color: gray;
+
+    span {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}

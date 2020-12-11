@@ -1,0 +1,12 @@
+<mat-nav-list>
+    <div class="profile-card">
+        <div class="header">
+            <h2>{{ auth.getUserDetails()?.first_name +" "+ auth.getUserDetails()?.last_name }}</h2>
+            <h4>{{ auth.getUserDetails()?.email }}</h4>
+        </div>
+        <img *ngIf="auth.getUserDetails()?.roleID == 2" [src]="logo" style="max-width: 200px; max-height: 200px;">
+    </div>
+
+    <mat-divider></mat-divider>        
+    <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item>
+</mat-nav-list>

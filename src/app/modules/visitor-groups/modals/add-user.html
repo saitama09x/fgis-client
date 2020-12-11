@@ -1,0 +1,67 @@
+<form [formGroup]="form" method="PUT" (ngSubmit) = "SubmitUser()">
+<h2 mat-dialog-title class='text-dark'>Add New User</h2>
+
+<mat-dialog-content>
+
+<div class='card bg-white text-dark'>
+	<div class='card-body'>
+		<div class='avatar-wrapper'>
+			<div class='avatar-img'>
+				<img [src]="photoUrl" />
+			</div>
+
+			<div>
+				<button type="button" mat-icon-button color="primary" aria-label="Browse" (click)="browseImage(profileImg)">
+		            <mat-icon>insert_photo</mat-icon>
+		        </button>
+		         <input type="file" #profileImg style="display: none;" observeFiles accept="image/*" (change)="onProfileChange($event)"/>
+			</div>
+		</div>
+		<div class="form-group text-center">
+			<label>Quality Check: <strong>{{quality}}</strong></label>
+		</div>
+		<div class='form-group d-flex justify-content-center' *ngIf="loading==true">
+			<img src="/assets/ajax-loader.gif" />
+		</div>
+		<div class='form-group'>
+			<div class="alert alert-danger alert-dismissible" role="alert" *ngIf="has_lower_quality==true">
+		    <button type="button" class="close" (click)="dismissAlert()">×</button>
+			<div class="alert-message">
+			  <span><strong>Please change with higher quality of face image.</strong></span>
+			</div>
+		  </div>
+		</div>
+		<div class='form-group'>
+			<label>First Name: </label><input type='text' class='form-control' matInput formControlName="fname" />
+			<mat-error *ngIf="fname_require==true">Required Field</mat-error>
+		</div>
+		<div class='form-group'>
+			<label>Last Name:</label> <input type='text' class='form-control' matInput formControlName="lname" />
+		</div>
+		<div class='form-group'>
+		<label>Gender:</label> 
+		<select class='form-control' formControlName="gender">
+			<option value="Male">Male</option>
+			<option value="Female">Female</option>
+		</select>
+		</div>
+		<div class='form-group'>
+			<label>Age:</label> <input type='number' class='form-control' matInput formControlName="age" />
+		</div>
+		<div class='form-group'>
+			<label>Email:</label> <input type='email' class='form-control' matInput formControlName="emailadd" />
+		</div>
+		<div class='form-group'>
+			<label>Phone:</label> <input type='text' class='form-control' matInput formControlName="phone" />
+		</div>
+	</div>
+</div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+<img src="/assets/ajax-loader.gif" class='mr-2' *ngIf="loading_submit==true"/>
+<button type="button" class='btn btn-md btn-danger mr-2' [mat-dialog-close]="0">Cancel</button>
+<button class='btn btn-md btn-primary'>Save</button>
+</mat-dialog-actions>
+</form>

@@ -1,0 +1,396 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">Tracking</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javaScript:;">Live Demographics</a>
+            </li>
+		</ol>
+	</div>
+	<div class="col-sm-3">
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+       
+        <div class="row justify-content-start">
+            <div class="p-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Camera</mat-label>
+                    <mat-select [value]="deviceUuid" (selectionChange)="cameraChange($event)">	
+                    	<mat-option [value]="">Please Select Camera</mat-option>
+
+                        <mat-option *ngFor="let camera of cameras" [value]="camera.deviceUuid">{{ camera.deviceName }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- <div class="p-2">
+            	<mat-form-field appearance="fill">
+				  <mat-label>Choose a date</mat-label>
+				  <input matInput [matDatepicker]="picker" value="{{datePicker}}" (dateChange)="dateChange($event)">
+				  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				  <mat-datepicker #picker ></mat-datepicker>
+				</mat-form-field>
+            </div> -->
+        </div>
+
+    </div>
+
+	<div class="col-lg-12">
+
+        <div class='row'>
+        	<div class='col-md-8'>
+        		<div class='d-flex flex-wrap'>
+	  
+		        		<div class='card mr-3' style='width:48%;'>
+		        			<div class='card-header'>
+					  			<h3 class='card-title mb-0'><strong>Mask</strong></h3>
+					  		</div>
+		        			<div class='card-body'>
+		        				<div class='d-flex justify-content-between'>
+		        					<div class='text-white p-2'>
+		        						<h1 class='card-title' *ngIf="trackRes != null">{{trackRes.TotalMask}}</h1>
+		        					</div>
+		        					<div class='mx-auto'>
+							        	<apx-chart
+										    [series]="chartOptions.series"
+										    [chart]="chartOptions.chart"
+										    [plotOptions]="chartOptions.plotOptions"
+										    [labels]="chartOptions.labels"
+										    [stroke]="chartOptions.stroke"
+										    [fill]="chartOptions.fill"
+							  			></apx-chart>
+						  			</div>
+					  			</div>
+					  		</div>
+					  	</div>
+
+					  	<div class='card'  style='width:48%;'>
+					  		<div class='card-header'>
+					  			<h3 class='card-title mb-0'><strong>Beard</strong></h3>
+					  		</div>
+		        			<div class='card-body'>
+		        				<div class='d-flex justify-content-between'>
+		        					<div class='text-white p-2'>
+		        						<h1 class='card-title' *ngIf="trackRes != null">{{trackRes.TotalBeard}}</h1>
+		        					</div>
+		        					<div class='mx-auto'>
+							        	<apx-chart
+										    [series]="chartBeard.series"
+										    [chart]="chartBeard.chart"
+										    [plotOptions]="chartBeard.plotOptions"
+										    [labels]="chartBeard.labels"
+										    [stroke]="chartBeard.stroke"
+										    [fill]="chartOptions.fill"
+							  			></apx-chart>
+						  			</div>
+					  			</div>
+					  		</div>
+					  	</div>
+					  	<div class='card mr-3'  style='width:48%;'>
+					  		<div class='card-header'>
+					  			<h3 class='card-title mb-0'><strong>Smile Total Score</strong></h3>
+					  		</div>
+		        			<div class='card-body'>
+		        				<div class='d-flex justify-content-between'>
+		        					<div class='text-white p-2'>
+		        						<h1 class='card-title' *ngIf="trackRes != null">{{trackRes.TotalAudience}}</h1>
+		        					</div>
+		        					<div class='mx-auto'>
+							        	<apx-chart
+										    [series]="chartSmile.series"
+										    [chart]="chartSmile.chart"
+										    [plotOptions]="chartSmile.plotOptions"
+										    [labels]="chartSmile.labels"
+										    [stroke]="chartSmile.stroke"
+										    [fill]="chartOptions.fill"
+							  			></apx-chart>
+						  			</div>
+					  			</div>
+					  		</div>
+					  	</div>
+					  	<div class='card' style='width:48%;'>
+					  		<div class='card-header'>
+		        				<h3 class='card-title mb-0'>Audience Count</h3>
+		        			</div>
+		        			<div class='card-body'>
+		        				<div class='d-flex justify-content-between'>
+		        					<div class='mx-auto'>
+							        	<apx-chart
+							        		#chart_total
+										    [series]="charttotal.series"
+										    [chart]="charttotal.chart"
+										    [plotOptions]="charttotal.plotOptions"
+										    [labels]="charttotal.labels"
+										    [stroke]="charttotal.stroke"
+										    [fill]="charttotal.fill"
+							  			></apx-chart>
+						  			</div>
+					  			</div>
+					  		</div>
+					  	</div>
+		
+					
+				</div>
+  			</div>
+  			<div class='col-md-4'>
+  			<div class="card">
+            <div class="card-header">Camera Snapshot Preview</div>
+            <div class='card-body' *ngIf="snapshot == null" style="background-image:url('assets/snapshot_default.jpg');background-repeat:no-repeat;background-size:cover;height: 312px;"></div>
+            <div class='card-body' *ngIf="snapshot" style="background-image:url('/previewSnapshots/preview/{{ snapshot.filename }}');background-repeat:no-repeat;background-size:cover;height: 312px;"></div>              
+            <div *ngIf="snapshot" class="card-footer">{{ snapshot.updated_at | date:"hh:mm:ss a" }}</div>
+        	</div>
+
+	        	<div class="card">
+	        		<div class="card-header"><h3 class='card-title mb-0' >Age Group</h3></div>
+	        		<div class='card-body'>
+	        			<div class='mx-auto'>
+				        	<apx-chart
+								    [series]="polarChart.series"
+								    [chart]="polarChart.chart"
+								   	[fill]="polarChart.fill"
+								   	[labels]="polarChart.labels"
+								   	[dataLabels]="polarChart.dataLabels"
+								   	[legend]="polarChart.legend"
+								   	[yaxis]="polarChart.yaxis"
+								   	[stroke]="polarChart.stroke"
+					  			></apx-chart>
+			  			</div>
+			  		</div>
+		  		</div>
+
+  			</div>
+        </div>
+
+        <div class='row'>
+        	<div class='col-md-8'>
+        		<div class='card'>
+        			<div class='card-header'>
+        				<h3 class='card-title'>Gender & Audience</h3>
+        			</div>
+        			<div class='card-body'>
+	        			<apx-chart
+						    [series]="barline.series"
+						    [chart]="barline.chart"
+						    [labels]="barline.labels"
+						    [stroke]="barline.stroke"
+						    [dataLabels]="barline.dataLabels"
+						    [xaxis]="barline.xaxis"
+						    [yaxis]="barline.yaxis"
+						    [legend]="barline.legend"
+						    [fill]="barline.fill"
+						    [markers]="barline.markers"
+						    [tooltip]="barline.tooltip"
+						    [colors]="barline.colors"
+			  			></apx-chart>
+			  		</div>
+			  	</div>
+        	</div>
+        	<div class='col-md-4'>
+        		<div class='card'>
+	  				<div class='card-header'>
+	  					<h3 class='card-title'>Eye Wear</h3>
+	  				</div>
+        			<div class='card-body'>
+        				<div class='mx-auto'>
+				  			<apx-chart
+						    [series]="glassChart.series"
+						    [chart]="glassChart.chart"
+						    [plotOptions]="glassChart.plotOptions"
+						    [labels]="glassChart.labels"
+						    [stroke]="glassChart.stroke"
+						    [fill]="glassChart.fill"
+							></apx-chart>
+						</div>
+						<div class='d-flex justify-content-around'>
+							<div>
+								<p class='text-center'>{{countGlass}}</p>
+								<p class='text-center'>Wearing Glass</p>
+							</div>
+							<div>|</div>
+							<div>
+								<p class='text-center'>{{countSunGlass}}</p>
+								<p class='text-center'>Wearing Sun Glass</p>
+							</div>
+						</div>
+					</div>
+				</div>
+        	</div>
+        </div>
+
+        <div class='row'>
+        	<div class='col-md-12'>
+        		<div class='card'>
+        			<div class='card-body'>
+	        			<apx-chart
+						    [series]="barChart.series"
+						    [chart]="barChart.chart"
+						   	[title]="barChart.title"
+						   	[xaxis]="barChart.xaxis"
+						   	[yaxis]="barChart.yaxis"
+						   	[labels]="barChart.labels"
+						   	[plotOptions]="barChart.plotOptions"
+						   	[grid]="barChart.grid"
+						   	[stroke]="barChart.stroke"
+						   	[fill]="barChart.fill"
+						   	[legend]="barChart.legend"
+						   	[colors]="barChart.colors"
+		  				></apx-chart>
+	  				</div>
+	  			</div>
+	  		</div>
+	  		<div class='col-md-4'>
+	  			
+	  		</div>
+     	</div>
+
+     	<div class='row'>
+     		<div class='col-md'>
+     			<div class='card'>
+     				<div class='card-body'>
+		     			<apx-chart
+		     			#chart_upperType
+					    [series]="upperType.series"
+					    [chart]="upperType.chart"
+					    [plotOptions]="upperType.plotOptions"
+					    [stroke]="upperType.stroke"
+					    [xaxis]="upperType.xaxis"
+					    [title]="upperType.title"
+					    [legend]="upperType.legend"
+					    [yaxis]="upperType.yaxis"
+					    [dataLabels]="upperType.dataLabels"
+					    [tooltip]="upperType.tooltip"
+					    [fill]="upperType.fill"
+						></apx-chart>
+					</div>
+				</div>
+     		</div>
+     		<div class='col-md'>
+     			<div class='card'>
+     				<div class='card-body'>
+		     			<apx-chart
+		     			#chart_upperCloth
+					    [series]="upperCloth.series"
+					    [chart]="upperCloth.chart"
+					    [plotOptions]="upperCloth.plotOptions"
+					    [stroke]="upperCloth.stroke"
+					    [xaxis]="upperCloth.xaxis"
+					    [title]="upperCloth.title"
+					    [yaxis]="upperCloth.yaxis"
+					    [legend]="upperType.legend"
+					    [dataLabels]="upperCloth.dataLabels"
+					    [tooltip]="upperCloth.tooltip"
+					    [fill]="upperType.fill"
+						></apx-chart>
+					</div>
+				</div>
+     		</div>
+     	</div>
+     	<div class='row'>
+     		<div class='col-md'>
+     			<div class='card'>
+     				<div class='card-body'>
+		     			<apx-chart
+		     			#chart_lowerCloth
+					    [series]="lowerCloth.series"
+					    [chart]="lowerCloth.chart"
+					    [plotOptions]="lowerCloth.plotOptions"
+					    [stroke]="lowerCloth.stroke"
+					    [xaxis]="lowerCloth.xaxis"
+					    [title]="lowerCloth.title"
+					    [yaxis]="upperCloth.yaxis"
+					    [legend]="upperType.legend"
+					    [dataLabels]="upperCloth.dataLabels"
+					    [tooltip]="upperCloth.tooltip"
+					    [fill]="upperType.fill"
+						></apx-chart>
+					</div>
+				</div>
+     		</div>
+     		<div class='col-md'>
+     			<div class='card'>
+     				<div class='card-body'>
+	     			<apx-chart
+	     				#chart_upperMode
+					    [series]="upperMode.series"
+					    [chart]="upperMode.chart"
+					    [plotOptions]="upperMode.plotOptions"
+					    [stroke]="upperMode.stroke"
+					    [xaxis]="upperMode.xaxis"
+					    [title]="upperMode.title"
+					    [yaxis]="upperCloth.yaxis"
+					    [legend]="upperType.legend"
+					    [dataLabels]="upperCloth.dataLabels"
+					    [tooltip]="upperCloth.tooltip"
+					    [fill]="upperType.fill"
+						></apx-chart>
+					</div>
+				</div>
+     		</div>
+     	</div>
+
+     	<div class='row'>
+     		<div class='col-md'>
+     			<div class='card'>
+     				<div class='card-body'>
+     					<apx-chart
+     					#chart_lowerMode
+					    [series]="lowerMode.series"
+					    [chart]="lowerMode.chart"
+					    [plotOptions]="lowerMode.plotOptions"
+					    [stroke]="lowerMode.stroke"
+					    [xaxis]="lowerMode.xaxis"
+					    [title]="lowerMode.title"
+					    [yaxis]="upperCloth.yaxis"
+					    [legend]="upperType.legend"
+					    [dataLabels]="upperCloth.dataLabels"
+					    [tooltip]="upperCloth.tooltip"
+					    [fill]="upperType.fill"
+						></apx-chart>
+     				</div>
+     			</div>
+     		</div>
+     		<div class='col-md'>
+     			<div class='card'>
+     				<div class='card-header'>
+     					<h3 class='card-title'>Upper Color</h3>
+     				</div>
+     				<div class='card-body'>
+     					<div class='d-flex justify-content-center'>
+	     					<apx-chart
+						    [series]="upperColor.series"
+						    [chart]="upperColor.chart"
+						    [labels]="upperColor.labels"
+						    [legend]="upperColor.legend"
+						    [fill]="upperColor.fill"
+							></apx-chart>
+						</div>
+     				</div>
+     			</div>
+     		</div>
+     	</div>
+
+     	<div class='row'>
+     		<div class='col-md-6'>
+     			<div class='card'>
+     				<div class='card-header'>
+     					<h3 class='card-title'>Lower Color</h3>
+     				</div>
+     				<div class='card-body'>
+     					<div class='d-flex justify-content-center'>
+	     					<apx-chart
+						    [series]="lowerColor.series"
+						    [chart]="lowerColor.chart"
+						    [labels]="lowerColor.labels"
+						    [legend]="lowerColor.legend"
+						    [fill]="lowerColor.fill"
+							></apx-chart>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

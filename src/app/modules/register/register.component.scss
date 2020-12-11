@@ -1,0 +1,35 @@
+.wifibeacon-form {
+    margin: 10px; 
+}
+
+mat-label {
+    color: white;
+}
+   
+mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.photo-wrapper{
+	position:relative;
+}
+
+.photo-wrapper .photo-img{
+	width:100%;
+	overflow:hidden;
+	border-radius: 30px;
+}
+
+.photo-wrapper img{
+	width:100%;
+}
+
+.photo-wrapper .upload-btn{
+	position:absolute;
+	top: 5px;
+}
+
+.photo-wrapper .upload-btn mat-icon{
+	font-size:30pt;
+}

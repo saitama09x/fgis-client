@@ -1,0 +1,418 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">Tracking</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javaScript:;">Basic Tracking</a>
+            </li>
+		</ol>
+	</div>
+	<div class="col-sm-3">
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Camera</mat-label>
+                    <mat-select [value]="0" (selectionChange)="cameraChange($event)">
+                        <mat-option [value]="0">All</mat-option>
+                        <mat-option *ngFor="let camera of cameras" [value]="camera.deviceUuid">{{ camera.deviceName }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-lg-6" style="text-align: right;">
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input 
+                        [formGroup]="dateRangeForm"
+                        [rangePicker]="picker">
+                        <input matStartDate formControlName="startDateForm" placeholder="Start date" (dateChange)="startDateChange($event)">
+                        <input matEndDate formControlName="endDateForm" placeholder="End date" (dateChange)="endDateChange($event)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>    
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+			<div class="card-header text-uppercase">TRAFFIC</div>
+			<div class="card-body">				
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="trafficLineChartData" [labels]="trafficLineChartLabels" [options]="trafficLineChartOptions" [colors]="trafficLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">				           
+				<div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ viewCount }}</h5>
+						<small class="mb-0">View</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ totalCount }}</h5>
+						<small class="mb-0">Total</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ viewPercent }}%</h5>
+						<small class="mb-0">View Percentage</small>
+					</div>
+                </div>                		
+			</div>
+		</div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+			<div class="card-header text-uppercase">TOTAL UNIQUE FACES</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="visitorsLineChartData" [labels]="visitorsLineChartLabels" [options]="visitorsLineChartOptions" [colors]="visitorsLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ visitorsCount }}</h5>
+						<small class="mb-0">Total Traffic</small>
+					</div>
+                </div>             
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ uniqueFacesCount }}</h5>
+						<small class="mb-0">Total Unique Faces</small>
+					</div>
+                </div>               		
+			</div>
+		</div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+			<div class="card-header text-uppercase">Duration</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="stayViewDurationLineChartData" [labels]="stayViewDurationLineChartLabels" [options]="stayViewDurationLineChartOptions" [colors]="stayViewDurationLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ totalDuration }}</h5>
+						<small class="mb-0">Total Duration</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ averageTotalDuration }}</h5>
+						<small class="mb-0">Average Total Duration</small>
+					</div>
+                </div>             
+				<div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ totalViewDuration }}</h5>
+						<small class="mb-0">Total View Duration</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ averageViewDuration }}</h5>
+						<small class="mb-0">Average View Duration</small>
+					</div>
+                </div>               		
+			</div>
+		</div>
+    </div>
+
+    <div *ngIf="uniqueFacesByCameraStats" class="col-lg-12">
+        <div class="card">
+			<div class="card-header text-uppercase">UNIQUE ID</div>
+			<div class="card-body">				
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="visitorsByCameraLineChartData" [labels]="visitorsByCameraLineChartLabels" [options]="visitorsByCameraLineChartOptions" [colors]="visitorsByCameraLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">				
+				<div class="col-12 col-lg-12">
+					<div class="p-3">
+						<h5 class="mb-0">{{ uniqueFacesByCameraCount }}</h5>
+						<small class="mb-0">Total Unique ID</small>
+					</div>
+                </div>               		
+			</div>
+		</div>
+    </div>
+    
+    <div class="col-lg-12">
+        <div class="card">
+			<div class="card-header text-uppercase">GENDER</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="genderLineChartData" [labels]="genderLineChartLabels" [options]="genderLineChartOptions" [colors]="genderLineChartColors" legend="true" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ maleCount }}</h5>
+						<small class="mb-0">Male</small>
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ femaleCount }}</h5>
+						<small class="mb-0">Female</small>
+					</div>
+                </div>                		
+			</div>
+		</div>
+    </div>
+    
+    <div class="col-lg-12">
+        <div class="card">
+			<div class="card-header text-uppercase">EXPRESSIONS</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="expressionLineChartData" [labels]="expressionLineChartLabels" [options]="expressionLineChartOptions" [colors]="expressionLineChartColors" legend="true" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ happyCount }}</h5>
+						<small class="mb-0">Happy</small>
+					</div>
+				</div>
+				<div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ calmCount }}</h5>
+						<small class="mb-0">Calm</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ otherExpCount }}</h5>
+						<small class="mb-0">Undetected</small>
+					</div>
+                </div>                		
+			</div>
+		</div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header text-uppercase">Age Range</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [colors]="ageChartColors" legend="true" chartType="bar"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ maleCount }}</h5>
+                                <small class="mb-0">Male</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ femaleCount }}</h5>
+                                <small class="mb-0">Female</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>                  
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">Gender</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [options]="genderChartOptions" chartType="pie" [colors]="genderChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ malePercent }}%</h5>
+                                <small class="mb-0">Male</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ femalePercent }}%</h5>
+                                <small class="mb-0">Female</small>
+                            </div>
+                        </div>
+                    </div>  
+                </div>                  
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">Mask</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="maskChartData" [labels]="maskChartLabels" [options]="maskChartOptions" chartType="pie" [colors]="maskChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ withMaskPercent }}%</h5>
+                                <small class="mb-0">With Mask</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ noMaskPercent }}%</h5>
+                                <small class="mb-0">No Mask</small>
+                            </div>
+                        </div>
+                    </div>  
+                </div>                  
+            </div>
+        </div>        
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">       
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">EXPRESSION</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="expressionChartData" [labels]="expressionChartLabels" [options]="expressionChartOptions" chartType="pie" [colors]="expressionChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ happyPercent }}%</h5>
+                                <small class="mb-0">Happy</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ calmPercent }}%</h5>
+                                <small class="mb-0">Calm</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ otherExpPercent }}%</h5>
+                                <small class="mb-0">Undetected</small>
+                            </div>
+                        </div>
+                    </div>  
+                </div>                  
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">AGE RANGE</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="ageRangePieChartData" [labels]="ageRangePieChartLabels" [options]="ageRangePieChartOptions" chartType="pie" [colors]="ageRangePieChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ oneToNinePercent }}%</h5>
+                                <small class="mb-0">1 to 9</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ tenToNineTeenPercent }}%</h5>
+                                <small class="mb-0">10 to 19</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ twentyToTwentyNinePercent }}%</h5>
+                                <small class="mb-0">20 to 29</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ thirtyToThirtyNinePercent }}%</h5>
+                                <small class="mb-0">30 to 39</small>
+                            </div>
+                        </div>                                               
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ fortyToFortyNinePercent }}%</h5>
+                                <small class="mb-0">40 to 49</small>
+                            </div>
+                        </div>                        
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ fiftyToFiftyNinePercent }}%</h5>
+                                <small class="mb-0">50 to 59</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ sixtyAndAbovePercent }}%</h5>
+                                <small class="mb-0">60 and above</small>
+                            </div>
+                        </div>                        
+                    </div>   
+                </div>              
+            </div>
+        </div>    
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header text-uppercase">Face List</div>
+
+			<ul *ngIf="faceDatas" class="list-group list-group-flush">
+				<li *ngFor="let faceData of faceDatas" class="list-group-item bg-transparent">
+					<div class="media align-items-center">
+                        <img *ngIf="faceData.faceSnapshot == null" src="assets/images/avatars/avatar-13.png" alt="user avatar" class="customer-img" />
+                        <img *ngIf="faceData.faceSnapshot" src="/faceSnapshots/preview/{{ faceData.faceSnapshot.filename }}" alt="user avatar" class="customer-img" />
+
+						<div class="media-body ml-4">                            
+                            <p class="mb-0 small-font">Tracking ID: {{ faceData.trackingFaceId }}</p>
+                            <p class="mb-0 small-font">Unique Face ID: {{ faceData.faceId }}</p>                            
+                        </div>
+						<div class="media-body ml-4">
+                            <p class="mb-0 small-font">{{ faceData.gender == 'M' ? 'Male' : 'Female' }}</p>
+                            <p class="mb-0 small-font">{{ faceData.age + ' years old' }}</p>                            
+                            <p class="mb-0 small-font">{{ faceData.mask > 0 ? 'Wearing Mask' : 'No Mask' }}</p>
+                        </div>
+                        <div class="media-body ml-4">
+                            <p class="mb-0 small-font">{{ faceData.glasses > 0 ? 'Wearing Glasses' : 'No Glasses' }}</p>
+                            <p class="mb-0 small-font">{{ faceData.stayDuration }}</p>
+                        </div>
+
+                        <small class="mb-0">{{ faceData.created_at | date:"MMM dd, yyyy" }} | {{ faceData.created_at | date:"hh:mm a" }}</small>
+					</div>
+				</li>				
+            </ul>
+
+            <mat-paginator [length]="faceDataTotalCount"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageOptions"
+              (page)="onPageChange($event)">
+            </mat-paginator>
+		</div>
+    </div>
+</div>

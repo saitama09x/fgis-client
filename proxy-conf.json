@@ -1,0 +1,78 @@
+{
+  "/users": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/campaigns": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/bodyGestures": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/facialExpressions": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/cameras": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/assets": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/wifibeacon": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/trackings": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/tracking": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/liveTrackings": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/groups": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/previewSnapshots": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/faceSnapshots": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/faceDatas": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/socket.io": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/devices": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/visitorGroup": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/api/json": {
+    "target": "http://42.60.195.95:9911/fr0001",
+    "secure": false
+  },
+  "/api/form": {
+    "target": "http://42.60.195.95:9911/fr0001",
+    "secure": false
+  }
+}

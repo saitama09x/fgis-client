@@ -1,0 +1,141 @@
+/*Cards */
+
+.card {
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 500;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.card-action {
+  float: right;
+
+  a i {
+    color: #ffffff;
+    border-radius: 50%;
+  }
+}
+
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.card-deck {
+  margin-bottom: 25px;
+}
+
+.card-group {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+
+  .card {
+    box-shadow: none;
+  }
+}
+
+.float-card {
+  position: relative;
+  top: -50px;
+  margin: 0px 20px;
+  border-radius: 0.25rem;
+  box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.45);
+
+  img {
+    width: 100%;
+  }
+}
+
+.float-card-content {
+  margin-top: -40px;
+}
+
+.post-date {
+  background: #03d0ea;
+  color: #fff;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 0.25rem;
+  box-shadow: 1px 2px 15px #00000040;
+}
+
+.card {
+  &.card-primary {
+    border-bottom: 3px solid #14abef !important;
+  }
+
+  &.card-success {
+    border-bottom: 3px solid #02ba5a !important;
+  }
+
+  &.card-danger {
+    border-bottom: 3px solid #f5365c !important;
+  }
+
+  &.card-warning {
+    border-bottom: 3px solid #fba540 !important;
+  }
+
+  &.card-info {
+    border-bottom: 3px solid #03d0ea !important;
+  }
+
+  &.card-light {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.125) !important;
+  }
+
+  &.card-secondary {
+    border-bottom: 3px solid #d13adf !important;
+  }
+
+  &.card-dark {
+    border-bottom: 3px solid #000000 !important;
+  }
+}
+
+.bubble {
+  position: relative;
+  overflow: hidden;
+}
+
+.bubble .card-block:before,
+.bubble .card-block:after {
+  content: "";
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.22);
+  right: -40px;
+  border-radius: 50%;
+}
+
+.bubble .card-block:before {
+  width: 100px;
+  height: 100px;
+  bottom: -40px;
+}
+
+.bubble .card-block:after {
+  width: 80px;
+  height: 80px;
+  bottom: 40px;
+}

@@ -1,0 +1,128 @@
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-7'>
+			<div class='card'>
+				<div class='card-header'>
+					<h4 class='card-title'>
+						{{ groupname }}
+					</h4>
+					<h4 class='card-subtitle'>
+						{{ groupdesc }}
+					</h4>
+				</div>
+        <div class='card-body'>
+            <div class='form-group'>
+                <label>Search: <input type='form-control' (keyup)="onSearch($event)" /></label>   
+            </div>
+            <ngx-datatable
+                class="material"
+                [rows]="dt_rows"
+                (rowClass)="dt_rowClass"
+                [columns]="dt_columns"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="100"
+                rowHeight="auto"
+                [externalPaging]="true"
+                selectionType="single"
+                [count]="dt_totalrows"
+                [selected]="dt_selected"
+                (activate)="dt_onActive($event)"
+                (select)="dt_onSelect($event)"
+                >
+            <ngx-datatable-column prop="photo" name="Photo">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                      <img [src]="value" width="100px" height="100px" /> 
+                  </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="first_name" name="First Name">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    <strong>{{ value }}</strong>
+                  </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="last_name" name="Last Name" >
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    <strong>{{ value }}</strong>
+                  </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="phone" name="Phone">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    <strong>{{ value }}</strong>
+                  </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="email" name="Email">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                      <strong>{{ value }}</strong>
+                  </ng-template>
+            </ngx-datatable-column>
+             <ngx-datatable-footer *ngIf="true">
+                  <ng-template
+                    ngx-datatable-footer-template
+                    let-rowCount="rowCount"
+                    let-pageSize="pageSize"
+                    let-selectedCount="selectedCount"
+                    let-curPage="curPage"
+                    let-offset="offset"
+                  >
+                    <div class="container-fluid">
+                    <hr style="width:100%" />
+                    <div class='row'>
+                    <div class='col-md'>
+                    <div class="p-1">Page {{dt_page}} / {{rowCount}}</div>
+                    </div>
+                    <div class='col-md'>
+                        <div *ngIf="rowCount > pageSize">
+                            <div class='d-flex justify-content-end'>
+                            <div class='btn-group'>
+                                <button type='button' class='btn btn-sm btn-danger' (click)="dt_movePrev()">
+                                    <<
+                                </button>
+                                <button type='button' *ngFor="let page of dt_paginate; let i = index" class='btn btn-sm btn-primary' (click)="dt_setPage({ limit : dt_limit, offset : i })">{{page}}</button>
+                                <button type='button' class='btn btn-sm btn-danger' (click)="dt_moveNext()">
+                                    >>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-footer>
+            </ngx-datatable>
+        </div>
+			</div>
+		</div>
+		<div class='col-md'>
+				 <div class='card'>
+            <div class='card-body'>
+                 <div *ngIf="dt_initSelect.length" class='m-auto'>
+                    <div *ngFor="let col of dt_columns">
+                        <div class='form-group' *ngIf="col.prop == 'photo'">
+                            <label>{{col.name}}: &nbsp;</label>
+                            <img [src]="dt_initSelect[0][col.prop]" width="150px" height="150px"/>
+                        </div>
+                        <div class='form-group' *ngIf="col.prop != 'photo'">
+                            <label>{{col.name}}: &nbsp;</label>
+                            <strong>{{dt_initSelect[0][col.prop]}}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="dt_selected.length" class='m-auto'>
+                    <div *ngFor="let col of dt_columns">
+                        <div class='form-group' *ngIf="col.prop == 'photo'">
+                            <label>{{col.name}}: &nbsp;</label>
+                            <img [src]="dt_selected[0][col.prop]" width="150px" height="150px"/>
+                        </div>
+                        <div class='form-group' *ngIf="col.prop != 'photo'">
+                            <label>{{col.name}}: &nbsp;</label>
+                            <strong>{{dt_selected[0][col.prop]}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		</div>
+	</div>
+</div>

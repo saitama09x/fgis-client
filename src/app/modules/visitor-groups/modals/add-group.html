@@ -1,0 +1,25 @@
+<form [formGroup]="form" method="PUT" (ngSubmit) = "SubmitGroup()">
+<h2 mat-dialog-title class='text-dark' *ngIf="modal_type=='add'">Add New Group</h2>
+<h2 mat-dialog-title class='text-dark' *ngIf="modal_type=='edit'">Edit Group</h2>
+
+<mat-dialog-content>
+
+<div class='card bg-white'>
+	<div class='card-body'>
+		<div class='form-group'>
+
+			<label>Group Name: </label><input type='text' class='form-control' matInput formControlName="gname" />
+			 <mat-error *ngIf="gname_require==true">Required Field</mat-error>
+		</div>
+		<div class='form-group'>
+			<label>Group Description:</label> <input type='text' class='form-control' matInput formControlName="gdesc" />
+		</div>
+	</div>
+</div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+<button class='btn btn-md btn-primary'>Save</button>
+</mat-dialog-actions>
+</form>

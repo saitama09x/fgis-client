@@ -1,0 +1,59 @@
+<div class="container" style="margin-top: 100px; padding: 0px;">
+    <div class="container login-container">
+        <div class="login-sub-container">
+            <div class="app-name-container">
+                <a routerLink="/home"><p class="app-name">FACIAL & GESTURE<br>INTERACTIVE SYSTEM</p></a>
+                <p style="color: gray;">CAMPAIGN<br>PRODUCTION SYSTEM</p>
+            </div>
+            <form #loginFormControl="ngForm">
+                <div style="padding-top: 10px;">
+                    <div style="padding-left: 25px;">
+                        <div style="width: 280px;">
+                            <p id="lblError" class="error-msg"></p>
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fa fa-envelope"></i>
+                            <input type="email" placeholder="EMAIL ADDRESS" style="width: 180px;" name="email" (input)="onEmailChange($event, loginFormControl)" [(ngModel)]="credentials.email" autofocus required ngModel email> 
+                            <i [hidden]="emailInvalid" class="fa fa-check"></i>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa fa-lock"></i>
+                            <input type="password" placeholder="PASSWORD" style="width: 180px;" name="password" (input)="onPasswordChange($event, loginFormControl)" [(ngModel)]="credentials.password" required>
+                            <i [hidden]="passwordInvalid" class="fa fa-check"></i>
+                        </div>
+                        <div style="text-align: left; font-size: 9pt;">
+                            <label>
+                                <input type="checkbox" value="remember-me" /> Keep me logged in                   
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="signin-container">
+                        <button class="btn btn-primary" [disabled]="!loginFormControl.valid" (click)="login()">SIGN IN</button>
+                    </div>
+
+                    <div class="forgot-links">
+                        <span> <a href="#"> Forgot Password</a></span>
+                        <span> | </span>
+                        <span> <a href="#"> Contact Admin</a></span>
+                    </div>
+                </div>
+            </form>
+        </div>   
+
+        <div class="footer-container">
+            <span> <a href="#"> Terms of Use</a></span>
+            <span> | </span>
+            <span> <a href="#"> Privacy Statement</a></span>
+            <span> | </span>
+            <span> <a href="#"> Sitemap</a></span>
+            <span> | </span>
+            <span> <a href="#"> Useful Links</a></span>
+        </div>
+
+        <div class="footer-container" style="padding-top: 5px; padding-left: 5px;">
+            <p>Powered up by Grid_Synergy</p>
+        </div>
+    </div>
+</div>

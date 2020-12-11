@@ -1,0 +1,66 @@
+<div class='container-fluid'>
+	<div class='row mb-3'>
+		<div class="col">
+		    <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a>Visitor Groups</a></li>
+         </ol>
+	   </div>
+		<div class='col'>
+			<div class='d-flex'>
+				<button type='button' class='btn btn-md btn-white mr-3 w-50' (click)="addNewGroup()">Add Group</button>
+				<input type='text' class='form-control' placeholder="Search Groups" (keyup)="searchGroups($event)"/>
+			</div>
+		</div>
+	</div>
+	<div class='card'>
+		<div class='card-body'>
+			<ngx-datatable
+		    class="bootstrap"
+		    [loadingIndicator]="loadingIndicator"
+		    [rows]="dt_rows"
+		    [columns]="dt_columns"
+		    [columnMode]="'force'"
+		    [headerHeight]="50"
+		    [footerHeight]="50"
+		    rowHeight="auto"
+		    selectionType="single"
+		    [count]="dt_totalrows"
+		    [limit]="dt_limit"
+		    >
+		    	<ngx-datatable-column prop="gname" name="Title">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			        <strong>{{ value.trim() }}</strong>
+			      </ng-template>
+				</ngx-datatable-column>
+
+				<ngx-datatable-column prop="gdesc" name="Description">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			        <strong>{{ value.trim() }}</strong>
+			      </ng-template>
+				</ngx-datatable-column>
+
+
+				<ngx-datatable-column prop="users" name="Total Users">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			        <strong>{{ value.length }}</strong>
+			      </ng-template>
+				</ngx-datatable-column>
+
+				<ngx-datatable-column prop="Id" name="Actions">
+			      <ng-template let-value="value" ngx-datatable-cell-template>
+			      	 	<button mat-icon-button color="white" aria-label="people" (click)="onSelect(value)">
+                            <mat-icon>people</mat-icon>
+                        </button>
+			        	<button mat-icon-button color="white" aria-label="Edit" (click)="onEditModal(value)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                         <button mat-icon-button color="warn" aria-label="Delete" (click)="onDelete(value)">
+                            <mat-icon>delete</mat-icon> 
+                        </button>
+			      </ng-template>
+				</ngx-datatable-column>
+
+		    </ngx-datatable>
+		</div>
+	</div>
+</div>

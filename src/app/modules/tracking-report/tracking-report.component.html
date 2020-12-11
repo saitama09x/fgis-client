@@ -1,0 +1,765 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+
+<swal
+#viewmodal
+width="70%"
+background="#000"
+padding='0em'
+grow='column'
+[allowOutsideClick]=false
+[showConfirmButton]=false
+>
+<div *swalPortal>
+<div class='p-3 border-bottom border-white'>
+<div class='d-flex justify-content-between'>
+<h2 class="text-white text-left m-0">Face View</h2>
+<button mat-icon-button color="white" aria-label="Delete" (click)="closeModal()">
+    <mat-icon>close</mat-icon> 
+</button>
+</div>
+</div>
+<div class='row'>
+<div class='col-md-6 border-right'>
+<div class='form-group text-right m-3' *ngIf="_userdata == null">
+<label class='text-white'><strong>{{ faceDataModal.created_at | date:"MMM dd, yyyy" }} {{ faceDataModal.created_at | date:"hh:mm a" }}</strong></label>
+</div>
+<div class='d-flex p-3 mt-2' *ngIf="_userdata == null">
+<div class='form-group mr-3'>
+
+<img *ngIf="faceDataModal?.faceSnapshot == null" src="assets/images/avatars/avatar-13.png" alt="user avatar" class="img-thumbnail" width="300px"/>
+<img *ngIf="faceDataModal?.faceSnapshot" src="/faceSnapshots/preview/{{ faceDataModal?.faceSnapshot.filename }}" width="300px" alt="user avatar" class="img-thumbnail" />
+<div class='text-white text-left'>
+<label>Location:</label>
+<p><strong>{{faceDataModal.tracking_location.location}}</strong></p>
+</div>
+</div>
+
+<div class='form-group'>
+<div class='d-flex mb-2 w-border'>
+    <div class='mr-3'><img src="assets/face.png" /></div>
+    <div>
+        <span class='mr-3 text-white'>{{"U" + faceDataModal.faceId}}</span>
+        <span class='text-white'>{{"T" + faceDataModal.trackingFaceId}}</span>
+    </div>
+</div>
+<div class='d-flex mb-2 w-border'>
+    <div class='mr-3'><img src="assets/gender.png" /></div>
+    <div>
+        <span class="text-white">{{ faceDataModal.gender == 'M' ? 'Male' : 'Female' }}</span>
+    </div>
+</div>
+ <div class='d-flex mb-2 w-border'>
+    <div class='mr-3'><img src="assets/age.png" /></div>
+    <div>
+        <span class="text-white">{{ faceDataModal.age + ' years old'}}</span>
+    </div>
+</div>
+ <div class='d-flex mb-2 w-border'>
+    <div class='mr-3'><img src="assets/clock.png" /></div>
+    <div>
+        <span class="text-white">{{ faceDataModal.stayDuration }}</span>
+    </div>
+</div>
+<div class='form-group'>
+<div class='d-flex mb-2'>
+<div class="text-white mr-2">Features:</div>
+<div *ngIf="faceDataModal.mask > 0" class='mr-2 w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+    <img src="assets/mask1.png" />
+    <div class='tooltip_mask'>Wearing a Mask</div>
+</div>
+<div *ngIf="faceDataModal.glasses > 0" class='mr-2 w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+    <img src="assets/eyeglass1.png" />
+    <div class='tooltip_glass'>Wearing Glasses</div>
+</div>
+<div *ngIf="faceDataModal.beard > 0" class='w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+    <img src="assets/beard.png" />
+    <div class='tooltip_beard'>Have beard</div>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div class='form-group text-right m-3' *ngIf="_userdata != null">
+<label class='text-white'><strong>{{ _userdata.date_created | date:"MMM dd, yyyy" }} {{ _userdata.date_created | date:"hh:mm a" }}</strong></label>
+</div>
+<div class='form-group d-flex p-3 mt-2' *ngIf="_userdata != null">
+
+<div class='form-group mr-3'>
+
+<img *ngIf="faceDataModal?.faceSnapshot == null" src="assets/images/avatars/avatar-13.png" alt="user avatar" class="img-thumbnail" width="300px"/>
+<img *ngIf="faceDataModal?.faceSnapshot" src="/users/photo/{{ _userdata.photo }}" width="300px" alt="user avatar" class="img-thumbnail" />
+<div class='form-group'>
+    <h1 class='text-white text-center mb-0 pl-2'>{{_userdata.track_userid}}</h1>
+    <p class='text-center text-white'>Visitor ID Number</p>
+</div>
+</div>
+<div class='form-group'>
+
+<div *ngIf="_userdata.gname">
+    <div class='d-flex mb-2 w-border' >
+        <h2 class='text-white'>Group Name: {{_userdata.gname}}</h2>
+    </div>
+</div>
+<div class='d-flex mb-2 w-border'>
+<div class='mr-3'>Name:</div>
+    <div>
+        <span class="text-white">{{ _userdata.fname + " " + _userdata.lname }}</span>
+    </div>
+</div>
+<div class='d-flex mb-2 w-border'>
+<div class='mr-3'>Gender:</div>
+    <div>
+        <span class="text-white">{{ _userdata.gender }}</span>
+    </div>
+</div>
+ <div class='d-flex mb-2 w-border'>
+    <div class='mr-3'>Age:</div>
+    <div>
+        <span class="text-white">{{ _userdata.age }}</span>
+    </div>
+</div>
+<div class='d-flex mb-2 w-border'>
+    <div class='mr-3'>Email:</div>
+    <div>
+        <span class="text-white">{{ _userdata.emailadd }}</span>
+    </div>
+</div>
+</div>
+
+</div>
+    </div>
+    <div class='col-md-6'>
+        <h2 class='text-white m-0'>Similar Faces</h2>
+        <div *ngIf="!_faceDataModal.length" style="overflow-y:scroll;overflow-x:hidden;height:550px;">
+            <div *ngFor="let track of faceDataModal.tracking_user; let i = index" class='card face-card card2 m-3'>
+    <div class='d-flex justify-content-between p-2'>
+        <h1 class='text-white text-left mb-0 pl-2'><strong>{{track.similarity + "% Similarity"}}</strong></h1>
+        <div class='mb-2'><i class='text-white'>{{ track.date_created | date:"MMM dd, yyyy" }} {{ track.date_created | date:"hh:mm a" }}</i></div>
+    </div>
+    <div class='row'>
+        <div class='col'>
+             <div class='avatar-rounded'>
+                 <a (click)="onSimilarFace(track)">
+                     <img *ngIf="track.photo == null" src="assets/images/avatars/avatar-13.png" alt="user avatar" class="customer-img" />
+                    <img *ngIf="track.photo" [src]="'/users/photo/' + track.photo" alt="user avatar" class="customer-img" />
+                </a>
+            </div> 
+            <div class='form-group'>
+                <h1 class='text-white text-center mb-0 pl-2'>{{track.track_userid}}</h1>
+                <p class='text-center text-white'>Visitor ID Number</p>
+            </div>
+        </div>
+        <div class='col'>
+            <a (click)="onSimilarFace(track)">
+            <div *ngIf="track.gname">
+                <div class='d-flex mb-2 w-border' >
+                    <h2 class='text-white'>Group Name: {{track.gname}}</h2>
+                </div>
+            </div>
+            <div class='d-flex mb-2 w-border'>
+            <div class='mr-3'>Name:</div>
+                <div>
+                    <span class="text-white">{{ track.fname + " " + track.lname }}</span>
+                </div>
+            </div>
+            <div class='d-flex mb-2 w-border'>
+            <div class='mr-3'>Gender:</div>
+                <div>
+                    <span class="text-white">{{ track.gender }}</span>
+                </div>
+            </div>
+             <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'>Age:</div>
+                <div>
+                    <span class="text-white">{{ track.age }}</span>
+                </div>
+            </div>
+            <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'>Email:</div>
+                <div>
+                    <span class="text-white">{{ track.emailadd }}</span>
+                </div>
+            </div>
+            </a>
+           
+        </div>        
+    </div>
+<!--     <div *ngIf="faceData.tracking_user">
+        <div class='d-flex mb-2 border-top border-light-3 pt-2' >
+            <div class='switch-btn' *ngFor="let group of faceData.tracking_user">
+                <div class='switch-label'>{{group.gname}}</div>
+                <div class='switch-img'>
+                    <img [src]="'/users/photo/' + group.photo" />
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+
+        </div>
+        <div *ngIf="_faceDataModal.length" style="overflow-y:scroll;overflow-x:hidden;height:550px;">
+        <div *ngFor="let faceData of _faceDataModal; let i = index" class='card face-card card2 m-3'>
+
+     <div class='d-flex justify-content-between p-2'>
+        <h1 class='text-white text-left mb-0 pl-2'><strong>{{faceData.similarity + "% Similarity"}}</strong></h1>
+        <div class='mb-2'><i class='text-white'>{{ faceData.created_at | date:"MMM dd, yyyy" }} {{ faceData.created_at | date:"hh:mm a" }}</i></div>
+    </div>
+
+    <div class='row'>
+        <div class='col'>
+            
+             <div class='avatar-rounded'>
+             <a (click)="onChangeSimilar(faceData)">
+             <img *ngIf="faceData.faceSnapshot == null" src="assets/images/avatars/avatar-13.png" alt="user avatar" class="customer-img" />
+            <img *ngIf="faceData.faceSnapshot" src="/faceSnapshots/preview/{{ faceData.faceSnapshot.filename }}" alt="user avatar" class="customer-img" />
+            </a>
+            </div>
+            <div class='text-white text-left pl-3'>
+            <label>Location:</label>
+            <p><strong>{{faceData.tracking_location.location}}</strong></p>
+            </div>
+        </div>
+        <div class='col'>
+            <a (click)="onChangeSimilar(faceData)">
+            <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/face.png" /></div>
+                <div>
+                    <span class='mr-3 text-white'>{{"U" + faceData.faceId}}</span>
+                    <span class='text-white'>{{"T" + faceData.trackingFaceId}}</span>
+                </div>
+            </div>
+            <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/gender.png" /></div>
+                <div>
+                    <span class="text-white">{{ faceData.gender == 'M' ? 'Male' : 'Female' }}</span>
+                </div>
+            </div>
+             <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/age.png" /></div>
+                <div>
+                    <span class="text-white">{{ faceData.age + ' years old'}}</span>
+                </div>
+            </div>
+             <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/clock.png" /></div>
+                <div>
+                    <span class="text-white">{{ faceData.stayDuration }}</span>
+                </div>
+            </div>
+            <div class='d-flex mb-2'>
+                <div class="text-white mr-2">Features:</div>
+                <div *ngIf="faceData.mask > 0" class='mr-2 w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+                    <img src="assets/mask1.png" />
+                    <div class='tooltip_mask'>Wearing a Mask</div>
+                </div>
+                <div *ngIf="faceData.glasses > 0" class='mr-2 w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+                    <img src="assets/eyeglass1.png" />
+                    <div class='tooltip_glass'>Wearing Glasses</div>
+                </div>
+                <div *ngIf="faceData.beard > 0" class='w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+                    <img src="assets/beard.png" />
+                    <div class='tooltip_beard'>Have beard</div>
+                </div>
+            </div>
+            </a>
+        </div>        
+    </div>
+</div>
+</div>
+
+    </div>
+</div>
+<div class='text-right border-top border-white p-3'>
+<button type='button' class='btn btn-md btn-white' (click)="closeModal()">Close</button>
+</div>
+</div>
+</swal>
+
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">Tracking</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javaScript:;">Basic Tracking</a>
+            </li>
+		</ol>
+	</div>
+	<div class="col-sm-3" style="text-align: right;">
+        <button mat-mini-fab color="accent" aria-label="Export" (click)="onExport(content)">
+            <mat-icon>save_alt</mat-icon>
+        </button>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Camera</mat-label>
+                    <mat-select [value]="0" (selectionChange)="cameraChange($event)">
+                        <mat-option [value]="0">All</mat-option>
+                        <mat-option *ngFor="let camera of cameras" [value]="camera.deviceUuid">{{ camera.deviceName }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-lg-6" style="text-align: right;">
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input 
+                        [formGroup]="dateRangeForm"
+                        [rangePicker]="picker">
+                        <input matStartDate formControlName="startDateForm" placeholder="Start date" (dateChange)="startDateChange($event)">
+                        <input matEndDate formControlName="endDateForm" placeholder="End date" (dateChange)="endDateChange($event)">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>    
+            </div>
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <div class="col-md-8">
+        <div class='form-group'>
+            <div class="card">
+    			<div class="card-header text-uppercase">TRAFFIC</div>
+    			<div class="card-body">				
+    				<div class="chart-container-1">
+    					<canvas baseChart [datasets]="trafficLineChartData" [labels]="trafficLineChartLabels" [options]="trafficLineChartOptions" [colors]="trafficLineChartColors" legend="false" chartType="line"></canvas>
+    				</div>
+    			</div>
+    			<div class="row m-0 row-group text-center border-top border-light-3">				           
+    				<div class="col-12 col-lg-4">
+    					<div class="p-3">
+    						<h5 class="mb-0">{{ viewCount }}</h5>
+    						<small class="mb-0">View</small>
+    					</div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+    					<div class="p-3">
+    						<h5 class="mb-0">{{ totalCount }}</h5>
+    						<small class="mb-0">Total</small>
+    					</div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+    					<div class="p-3">
+    						<h5 class="mb-0">{{ viewPercent }}%</h5>
+    						<small class="mb-0">View Percentage</small>
+    					</div>
+                    </div>                		
+    			</div>
+    		</div>
+        </div>
+
+    <div class="form-group">
+        <div class="card">
+			<div class="card-header text-uppercase">TOTAL UNIQUE FACES</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="visitorsLineChartData" [labels]="visitorsLineChartLabels" [options]="visitorsLineChartOptions" [colors]="visitorsLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ visitorsCount }}</h5>
+						<small class="mb-0">Total Traffic</small>
+					</div>
+                </div>             
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ uniqueFacesCount }}</h5>
+						<small class="mb-0">Total Unique Faces</small>
+					</div>
+                </div>               		
+			</div>
+		</div>
+    </div>
+
+    <div class="form-group">
+        <div class="card">
+			<div class="card-header text-uppercase">Duration</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="stayViewDurationLineChartData" [labels]="stayViewDurationLineChartLabels" [options]="stayViewDurationLineChartOptions" [colors]="stayViewDurationLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ totalDuration }}</h5>
+						<small class="mb-0">Total Duration</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ averageTotalDuration }}</h5>
+						<small class="mb-0">Average Total Duration</small>
+					</div>
+                </div>             
+				<div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ totalViewDuration }}</h5>
+						<small class="mb-0">Total View Duration</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-3">
+					<div class="p-3">
+						<h5 class="mb-0">{{ averageViewDuration }}</h5>
+						<small class="mb-0">Average View Duration</small>
+					</div>
+                </div>               		
+			</div>
+		</div>
+    </div>
+
+    <div *ngIf="uniqueFacesByCameraStats" class="form-group">
+        <div class="card">
+			<div class="card-header text-uppercase">UNIQUE ID</div>
+			<div class="card-body">				
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="visitorsByCameraLineChartData" [labels]="visitorsByCameraLineChartLabels" [options]="visitorsByCameraLineChartOptions" [colors]="visitorsByCameraLineChartColors" legend="false" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">				
+				<div class="col-12 col-lg-12">
+					<div class="p-3">
+						<h5 class="mb-0">{{ uniqueFacesByCameraCount }}</h5>
+						<small class="mb-0">Total Unique ID</small>
+					</div>
+                </div>               		
+			</div>
+		</div>
+    </div>
+    
+    <div class="form-group">
+        <div class="card">
+			<div class="card-header text-uppercase">GENDER</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="genderLineChartData" [labels]="genderLineChartLabels" [options]="genderLineChartOptions" [colors]="genderLineChartColors" legend="true" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ maleCount }}</h5>
+						<small class="mb-0">Male</small>
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="p-3">
+						<h5 class="mb-0">{{ femaleCount }}</h5>
+						<small class="mb-0">Female</small>
+					</div>
+                </div>                		
+			</div>
+		</div>
+    </div>
+    
+    <div class="form-group">
+        <div class="card">
+			<div class="card-header text-uppercase">EXPRESSIONS</div>
+			<div class="card-body">
+				<div class="chart-container-1">
+					<canvas baseChart [datasets]="expressionLineChartData" [labels]="expressionLineChartLabels" [options]="expressionLineChartOptions" [colors]="expressionLineChartColors" legend="true" chartType="line"></canvas>
+				</div>
+			</div>
+			<div class="row m-0 row-group text-center border-top border-light-3">
+				<div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ happyCount }}</h5>
+						<small class="mb-0">Happy</small>
+					</div>
+				</div>
+				<div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ calmCount }}</h5>
+						<small class="mb-0">Calm</small>
+					</div>
+                </div>
+                <div class="col-12 col-lg-4">
+					<div class="p-3">
+						<h5 class="mb-0">{{ otherExpCount }}</h5>
+						<small class="mb-0">Undetected</small>
+					</div>
+                </div>                		
+			</div>
+		</div>
+    </div>
+
+    <div class='form-group'>
+         <div class="card">
+            <div class="card-header text-uppercase">Age Range</div>
+            <div class="card-body">
+                <div class="height-240">
+                    <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [colors]="ageChartColors" legend="true" chartType="bar"></canvas>
+                </div>
+            </div>
+            <div class="row m-0 row-group text-center border-top border-light-3">
+                <div class="col-12 col-lg-6">
+                    <div class="p-3">
+                        <h5 class="mb-0">{{ maleCount }}</h5>
+                        <small class="mb-0">Male</small>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="p-3">
+                        <h5 class="mb-0">{{ femaleCount }}</h5>
+                        <small class="mb-0">Female</small>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>
+<div class='col-md-4'>
+<div *ngFor="let faceData of faceDatas; let i = index" class='card face-card mb-2'>
+    <div class='row'>
+        <div class='col'>
+             <div class='avatar-rounded'>
+             <a (click)="openModal(faceData)">
+             <img *ngIf="faceData.faceSnapshot == null" src="assets/images/avatars/avatar-13.png" alt="user avatar" class="customer-img" />
+            <img *ngIf="faceData.faceSnapshot" src="/faceSnapshots/preview/{{ faceData.faceSnapshot.filename }}" alt="user avatar" class="customer-img" />
+            </a>
+            </div>  
+        </div>
+        <div class='col'>
+            <a (click)="openModal(faceData)">
+            <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/face.png" /></div>
+                <div>
+                    <span class='mr-3 text-white'>{{"U" + faceData.faceId}}</span>
+                    <span class='text-white'>{{"T" + faceData.trackingFaceId}}</span>
+                </div>
+            </div>
+            <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/gender.png" /></div>
+                <div>
+                    <span class="text-white">{{ faceData.gender == 'M' ? 'Male' : 'Female' }}</span>
+                </div>
+            </div>
+             <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/age.png" /></div>
+                <div>
+                    <span class="text-white">{{ faceData.age + ' years old'}}</span>
+                </div>
+            </div>
+             <div class='d-flex mb-2 w-border'>
+                <div class='mr-3'><img src="assets/clock.png" /></div>
+                <div>
+                    <span class="text-white">{{ faceData.stayDuration }}</span>
+                </div>
+            </div>
+            <div class='d-flex mb-2'>
+                <div class="text-white mr-2">Features:</div>
+                <div *ngIf="faceData.mask > 0" class='mr-2 w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+                    <img src="assets/mask1.png" />
+                    <div class='tooltip_mask'>Wearing a Mask</div>
+                </div>
+                <div *ngIf="faceData.glasses > 0" class='mr-2 w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+                    <img src="assets/eyeglass1.png" />
+                    <div class='tooltip_glass'>Wearing Glasses</div>
+                </div>
+                <div *ngIf="faceData.beard > 0" class='w-feat' (mouseenter) ="onTooltipEnter($event) "  (mouseleave) ="onTooltipLeave($event)">
+                    <img src="assets/beard.png" />
+                    <div class='tooltip_beard'>Have beard</div>
+                </div>
+            </div>
+            </a>
+            <div class='mb-2'><i class='text-white'>{{ faceData.created_at | date:"MMM dd, yyyy" }} {{ faceData.created_at | date:"hh:mm a" }}</i></div>
+        </div>        
+    </div>
+    <div  *ngIf="faceData.tracking_user">
+        <div class='d-flex mb-2 border-top border-light-3 pt-2'>
+            <div class='switch-btn' *ngFor="let group of faceData.tracking_user">
+                <div class='switch-label'>{{group.gname}}</div>
+                <div class='switch-img'>
+                    <img [src]="'/users/photo/' + group.photo" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='d-flex justify-content-start'>
+    {{ faceDataTotal + "/" + faceDataTotalCount}}
+</div>
+
+<div class='d-flex justify-content-between'>
+<button class='btn btn-md btn-primary' (click)="onPrevChange()">Previous</button>
+<button class='btn btn-md btn-primary' (click)="onNextChange()">Next</button>
+</div>
+</div>
+</div>
+<div class='row'>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">Gender</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [options]="genderChartOptions" chartType="pie" [colors]="genderChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ malePercent }}%</h5>
+                                <small class="mb-0">Male</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ femalePercent }}%</h5>
+                                <small class="mb-0">Female</small>
+                            </div>
+                        </div>
+                    </div>  
+                </div>                  
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">Mask</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="maskChartData" [labels]="maskChartLabels" [options]="maskChartOptions" chartType="pie" [colors]="maskChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ withMaskPercent }}%</h5>
+                                <small class="mb-0">With Mask</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ noMaskPercent }}%</h5>
+                                <small class="mb-0">No Mask</small>
+                            </div>
+                        </div>
+                    </div>  
+                </div>                  
+            </div>
+        </div>        
+    </div>
+
+    <div class="col-lg-12">
+        <div class="row">       
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">EXPRESSION</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="expressionChartData" [labels]="expressionChartLabels" [options]="expressionChartOptions" chartType="pie" [colors]="expressionChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ happyPercent }}%</h5>
+                                <small class="mb-0">Happy</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ calmPercent }}%</h5>
+                                <small class="mb-0">Calm</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ otherExpPercent }}%</h5>
+                                <small class="mb-0">Undetected</small>
+                            </div>
+                        </div>
+                    </div>  
+                </div>                  
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-uppercase">AGE RANGE</div>
+                    <div class="card-body">
+                        <div class="height-240">
+                            <canvas baseChart [data]="ageRangePieChartData" [labels]="ageRangePieChartLabels" [options]="ageRangePieChartOptions" chartType="pie" [colors]="ageRangePieChartColors"></canvas>
+                        </div>
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ oneToNinePercent }}%</h5>
+                                <small class="mb-0">1 to 9</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ tenToNineTeenPercent }}%</h5>
+                                <small class="mb-0">10 to 19</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ twentyToTwentyNinePercent }}%</h5>
+                                <small class="mb-0">20 to 29</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ thirtyToThirtyNinePercent }}%</h5>
+                                <small class="mb-0">30 to 39</small>
+                            </div>
+                        </div>                                               
+                    </div>
+                    <div class="row m-0 row-group text-center border-top border-light-3">
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ fortyToFortyNinePercent }}%</h5>
+                                <small class="mb-0">40 to 49</small>
+                            </div>
+                        </div>                        
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ fiftyToFiftyNinePercent }}%</h5>
+                                <small class="mb-0">50 to 59</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="p-3">
+                                <h5 class="mb-0">{{ sixtyAndAbovePercent }}%</h5>
+                                <small class="mb-0">60 and above</small>
+                            </div>
+                        </div>                        
+                    </div>   
+                </div>              
+            </div>
+        </div>    
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header" id="export-modal">
+      <h4 class="modal-title">Export</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="exportForm" class="export-form">
+        <div class="form-container">
+            <mat-form-field appearance="legacy">
+                <mat-label style="color: black;">Project Name</mat-label>
+                <input type="text" matInput formControlName="name" required>
+                <mat-error *ngIf="exportForm.controls['name'].invalid">{{getExportFormErrorMessage('name')}}</mat-error>
+            </mat-form-field>           
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="onExportStart(modal)" [disabled]="!exportForm.valid">Export</button>
+    </div>
+</ng-template>

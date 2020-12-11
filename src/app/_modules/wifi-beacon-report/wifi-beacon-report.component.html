@@ -1,0 +1,54 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">Wifi Beacon</a>
+            </li>
+		</ol>
+	</div>
+    <div class="col-sm-3">
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">      
+        <section class="panel">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date" (dateChange)="startDateChange($event)">
+                    <input matEndDate placeholder="End date" (dateChange)="endDateChange($event)">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+
+            <!--<highcharts-chart 
+                [Highcharts]="Highcharts"
+                [options]="chartOptions"
+                [(update)]="updateFlag"
+                style="width: 100%; height: 300px; display: block;">
+            </highcharts-chart>-->
+
+            <table class="table" id="table">
+                <thead>
+                <tr>
+                    <th>Wifi Beacon Name</th>
+                    <th>Wifi Beacon Location</th>
+                    <th>RSS</th>
+                    <th>Sender</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="wifiBeaconLogs">                        
+                    <tr *ngFor="let wifiBeaconLog of wifiBeaconLogs">
+                        <td>{{ wifiBeaconLog.deviceName }}</td>
+                        <td>{{ wifiBeaconLog.deviceLocation }}</td>
+                        <td>{{ wifiBeaconLog.avg_rssi }}</td>
+                        <td>{{ wifiBeaconLog.sender_vendor ? wifiBeaconLog.sender_vendor : wifiBeaconLog.receiver_vendor }}</td>
+                        <td>{{ wifiBeaconLog.dateTimeDetected | date:"dd/MM/yyyy hh:mm:ss"}}</td>                        
+                    </tr>
+                </tbody>                
+            </table>
+        </section>          
+    </div>
+</div>

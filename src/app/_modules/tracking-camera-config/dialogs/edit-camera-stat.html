@@ -1,0 +1,118 @@
+
+<h2 mat-dialog-title class='text-dark'>Device Status</h2>
+
+<mat-dialog-content>
+<div class='row justify-content-between mb-3'>
+	<div class='px-2'>
+		<h4  class='text-dark'>Device Name: <strong>{{deviceName}}</strong></h4>
+	</div>
+	<div class='px-2 row justify-content-between'>
+		<!-- <p>Restart:</p>
+		<div class="toggle-button toggle-button--aava">
+            <input id="toggleButton" #toggleButton type="checkbox" (change)="onRestart($event)">
+            <label for="toggleButton"></label>
+            <div class="toggle-button__icon"></div>
+        </div> -->
+    <button class="btn btn-md btn-danger" id="toggleButton" #toggleButton (click)="onRestart()">Restart Device</button>
+	</div>
+</div>
+
+<div class='d-flex justify-content-center'>
+<div class='box-chart px-2'>
+<label class='text-dark'>Memory</label>
+<div class='border-chart'>
+<apx-chart
+[series]="memoryChart.series"
+[chart]="memoryChart.chart"
+[plotOptions]="memoryChart.plotOptions"
+[labels]="memoryChart.labels"
+[stroke]="memoryChart.stroke"
+[fill]="memoryChart.fill"
+></apx-chart>
+</div>
+</div>
+<div class='box-chart px-2'>
+<label class='text-dark'>Storage</label>
+<div class='border-chart'>
+<apx-chart
+[series]="storageChart.series"
+[chart]="storageChart.chart"
+[plotOptions]="storageChart.plotOptions"
+[labels]="storageChart.labels"
+[stroke]="storageChart.stroke"
+[fill]="storageChart.fill"
+></apx-chart>
+</div>
+</div>
+<div class='box-chart px-2'>
+<label class='text-dark'>CPU Temperature</label>
+<div class='border-chart'>
+<apx-chart
+[series]="tempChart.series"
+[chart]="tempChart.chart"
+[plotOptions]="tempChart.plotOptions"
+[labels]="tempChart.labels"
+[stroke]="tempChart.stroke"
+[fill]="tempChart.fill"
+></apx-chart>
+</div>
+</div>
+</div>
+
+<div class='card mt-4'>
+<div class='card-body'>
+<ngx-datatable
+    class="bootstrap"
+    [loadingIndicator]="loadingIndicator"
+    [rows]="dt_rows"
+    [columns]="dt_columns"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    rowHeight="auto"
+    selectionType="single"
+    [count]="dt_totalrows"
+    [limit]="dt_limit"
+    >
+    <ngx-datatable-column prop="code" name="Code">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong *ngIf="value == 'storage'">Storage</strong>
+        <strong *ngIf="value == 'memory'">Memory</strong>
+        <strong *ngIf="value == 'cpu_temp'">CPU Temperature</strong>
+      </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column prop="value" name="Values">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <div *ngIf="value.type == 'storage'">
+        	<p>Free: <strong>{{value.free}} GB</strong></p>
+        	<p>Total: <strong>{{value.total}} GB</strong></p>
+        </div>
+        <div *ngIf="value.type == 'memory'">
+        	<p>Free: <strong>{{value.free}} GB</strong></p>
+        	<p>Total: <strong>{{value.total}} GB</strong></p>
+        </div>
+        <div *ngIf="value.type == 'cpu_temp'">
+        	<p>Temp: <strong>{{value.temp}}</strong></p>
+        </div>
+      </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column prop="msgType" name="Message Type">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{ value.trim() }}</strong>
+      </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column prop="description" name="Description">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{ value.trim() }}</strong>
+      </ng-template>
+	</ngx-datatable-column>
+	<ngx-datatable-column prop="submittedAt" name="submittedAt">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{ value.trim() }}</strong>
+      </ng-template>
+	</ngx-datatable-column>
+</ngx-datatable>
+</div>
+</div>
+
+</mat-dialog-content>

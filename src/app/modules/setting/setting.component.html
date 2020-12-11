@@ -1,0 +1,65 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">Settings</a>
+            </li>
+		</ol>
+	</div>
+	<div class="col-sm-3">
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3"></div>   
+    <div class="col-lg-5">
+        <div [formGroup]="clientForm" class="client-form">
+            <div class="form-container input-group">
+                <img [src]="company_logo" style="max-height: 100px;" />                
+                <button mat-icon-button color="primary" style="margin-top: 70px;" aria-label="Browse" (click)="browseLogo(companyLogoFile)" [disabled]="clientForm.disabled">
+                    <mat-icon>insert_photo</mat-icon>
+                </button>
+                <input type="file" #companyLogoFile style="display: none;" (change)="onCompanyLogoChange($event)" observeFiles accept="image/*" />
+            </div>
+            <div class="form-container" style="margin-top: 20px;">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Company Name</mat-label>
+                    <input type="text" matInput formControlName="company_name" required>
+                    <mat-error *ngIf="clientForm.controls['company_name'].invalid">{{getErrorMessage('company_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput placeholder="Ex. pat@example.com" formControlName="email" required>
+                    <mat-error *ngIf="clientForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>First Name</mat-label>
+                    <input type="text" matInput formControlName="first_name" required>
+                    <mat-error *ngIf="clientForm.controls['first_name'].invalid">{{getErrorMessage('first_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Last Name</mat-label>
+                    <input type="text" matInput formControlName="last_name" required>
+                    <mat-error *ngIf="clientForm.controls['last_name'].invalid">{{getErrorMessage('last_name')}}</mat-error>  
+                </mat-form-field>
+            </div>
+            <div class="form-container">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput formControlName="password" required>
+                    <mat-error *ngIf="clientForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>  
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="modal-footer" style="border: none;">
+            <mat-spinner [hidden]="!isSavingData" diameter="35"></mat-spinner>
+            <button [hidden]="isSavingData" type="button" class="btn btn-outline-dark" (click)="onSaveClient()" [disabled]="!clientForm.valid">Save</button>
+        </div>
+    </div>
+    <div class="col-lg-3"></div>                        
+</div>                            

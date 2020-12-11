@@ -1,0 +1,271 @@
+<form [formGroup]="form" method="PUT" (ngSubmit) = "onUpdateTracking(data.tracking_id)">
+
+<h2 mat-dialog-title class='text-dark'>Edit Camera Configuration</h2>
+
+<mat-dialog-content>
+
+<div class='row'>
+	
+	<div class='col-md'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>Live Tracking</mat-label>
+		    <input matInput formControlName="live_tracking" >
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>location</mat-label>
+		    <input matInput formControlName="location">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>branchName</mat-label>
+		    <input matInput formControlName="branchName">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>deviceDescription</mat-label>
+		    <input matInput formControlName="deviceDescription">
+		  </mat-form-field>
+	</div>
+
+
+</div>
+
+<div class='row'>
+
+
+	<div class='col-md-3'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>deviceName</mat-label>
+		    <input matInput formControlName="deviceName">
+		  </mat-form-field>
+	</div>
+
+
+	<div class='col-md-3'>
+		  <label class="text-dark">Device Code</label>
+		  <label class="text-dark">{{deviceCode}}</label>
+	</div>
+
+</div>
+
+<div class='p-2 mb-2 bg-primary'>Watch Config</div>
+
+<div class='row'>
+	<div class='col-md-3'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>Key Parameter Negative YAW</mat-label>
+		    <input matInput formControlName="watchConfig_negative_yaw">
+		  </mat-form-field>
+  	</div>
+  	<div class='col-md-3'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>Key Parameter Positive YAW</mat-label>
+		    <input matInput formControlName="watchConfig_positive_yaw">
+		  </mat-form-field>
+  	</div>
+  	<div class='col-md-3'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>Key Parameter Negative Pitch</mat-label>
+		    <input matInput formControlName="watchConfig_negative_pitch">
+		  </mat-form-field>
+  	</div>
+  	<div class='col-md-3'>
+		  <mat-form-field appearance="legacy">
+		    <mat-label>Key Parameter Positive Pitch</mat-label>
+		    <input matInput formControlName="watchConfig_positive_pitch">
+		  </mat-form-field>
+  	</div>
+</div>
+
+<div class='p-2 mb-2 bg-primary'>SDK Config</div>
+
+<div class='row'>
+	
+	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Body Track</label>
+		  <p><mat-slide-toggle formControlName="switch_body_track"></mat-slide-toggle></p>
+  	</div>
+
+  	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Face Watch</label>
+		  <p><mat-slide-toggle formControlName="switch_face_watch"></mat-slide-toggle></p>
+  	</div>
+
+  	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Body Attribute</label>
+		  <p><mat-slide-toggle formControlName="switch_body_attribute"></mat-slide-toggle></p>
+  	</div>
+
+  	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Face Attribute</label>
+		  <p><mat-slide-toggle formControlName="switch_face_attribute"></mat-slide-toggle></p>
+  	</div>
+
+  	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Body Image Crop</label>
+		  <p><mat-slide-toggle formControlName="switch_body_image_crop"></mat-slide-toggle></p>
+  	</div>
+
+  	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Face Image Crop</label>
+		  <p><mat-slide-toggle formControlName="switch_face_image_crop"></mat-slide-toggle></p>
+  	</div>
+
+  	<div class='col-md-3'>
+		  <label class='text-dark'>Switch Face Recognition</label>
+		  <p><mat-slide-toggle formControlName="switch_face_recognition"></mat-slide-toggle></p>
+  	</div>
+
+</div>
+
+<div class='p-2 mb-2 bg-primary'>Upload Stat Config</div>
+<div class='row'>
+	
+	<div class='col-md-3'>
+		 <label class='text-dark'>Statistic Body Track Trail</label>
+		  <p><mat-slide-toggle formControlName="body_track_trail"></mat-slide-toggle></p>
+	</div>
+
+	<div class='col-md-3'>
+		 <label class='text-dark'>Statistic Face Track Trail</label>
+		  <p><mat-slide-toggle formControlName="face_track_trail"></mat-slide-toggle></p>
+	</div>
+
+	<div class='col-md-3'>
+		 <mat-form-field appearance="legacy">
+		    <mat-label>Statistic Uploading Period</mat-label>
+		    <input matInput formControlName="uploading_period">
+		  </mat-form-field>
+	</div>
+
+</div>
+
+<div class='p-2 mb-2 bg-primary'>Detection Config</div>
+<div class='row'>
+	
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Min Body Quality</mat-label>
+		    <input matInput formControlName="min_body_quality">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Min Face Quality</mat-label>
+		    <input matInput formControlName="min_face_quality">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Timed Face Attribute</mat-label>
+		    <input matInput formControlName="timed_face_attribute">
+		  </mat-form-field>
+	</div>
+
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Face Attribute Period</mat-label>
+		    <input matInput formControlName="face_attribute_period">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Face Merge Time Range</mat-label>
+		    <input matInput formControlName="face_merge_time_range">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Incremental Body Quality</mat-label>
+		    <input matInput formControlName="incremental_body_quality">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Incremental Face Quality</mat-label>
+		    <input matInput formControlName="incremental_face_quality">
+		  </mat-form-field>
+	</div>
+
+	<div class='col-md-3'>
+		<mat-form-field appearance="legacy">
+		    <mat-label>Face Similarity Threshold</mat-label>
+		    <input matInput formControlName="face_similarity_threshold">
+		  </mat-form-field>
+	</div>
+</div>
+
+<div class='p-2 mb-2 bg-primary'>Snap Config</div>
+
+	<div class='row'>
+		<div class='col-md-3'>
+			 <label class='text-dark'>Snap Body</label>
+		  	 <p><mat-slide-toggle formControlName="snap_body"></mat-slide-toggle></p>
+		</div>
+		<div class='col-md-3'>
+			 <label class='text-dark'>Snap Face</label>
+		  	 <p><mat-slide-toggle formControlName="snap_face"></mat-slide-toggle></p>
+		</div>
+		<div class='col-md-3'>
+			 <mat-form-field appearance="legacy">
+		    <mat-label>Snap Uploading Period</mat-label>
+		    <input matInput formControlName="body_snap_times">
+		  </mat-form-field>
+		</div>
+		<div class='col-md-3'>
+			 <mat-form-field appearance="legacy">
+		    <mat-label>Max Body Snap Times </mat-label>
+		    <input matInput formControlName="body_snap_times">
+		  </mat-form-field>
+		</div>
+		<div class='col-md-3'>
+			 <mat-form-field appearance="legacy">
+		    <mat-label>Max Face Snap Times </mat-label>
+		    <input matInput formControlName="face_snap_times">
+		  </mat-form-field>
+		</div>
+		<div class='col-md-3'>
+			 <mat-form-field appearance="legacy">
+		    <mat-label>Feature Uploading</mat-label>
+		    <input matInput formControlName="feature_uploading">
+		  </mat-form-field>
+		</div>
+	</div>
+
+<div class='p-2 mb-2 bg-primary'>Camera Config</div>
+
+<div class='row'>
+	<div class='col-md-3'>
+		 <mat-form-field appearance="legacy">
+		    <mat-label>Camera Width</mat-label>
+		    <input matInput formControlName="cameraWidth">
+		  </mat-form-field>
+	</div>
+	<div class='col-md-3'>
+		 <mat-form-field appearance="legacy">
+		    <mat-label>Camera Height</mat-label>
+		    <input matInput formControlName="cameraHeight">
+		  </mat-form-field>
+	</div>
+</div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class='btn btn-md btn-danger mr-2'>Cancel</button>
+  <button class='btn btn-md btn-primary'>Save</button>
+</mat-dialog-actions>
+
+</form>

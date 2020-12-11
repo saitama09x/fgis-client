@@ -1,0 +1,76 @@
+<div class="row pt-2 pb-2">
+	<div class="col-sm-9">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javaScript:;">FR Interactive Video</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javaScript:;">Facial Expressions</a>
+            </li>
+		</ol>
+	</div>
+	<div class="col-sm-3" style="text-align: right;">
+        <button mat-fab color="primary" aria-label="Add" (click)="onCreate(content)">
+            <mat-icon>add</mat-icon>
+        </button>
+	</div>
+</div>
+
+<div class="row">            
+    <div class="col-lg-12">      
+        <section class="panel">
+            <table class="table" id="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="facialExpressions">                        
+                    <tr *ngFor="let facialExp of facialExpressions">
+                        <td>{{ facialExp.name }}</td>
+                        <td>{{ facialExp.code }}</td>
+                        <td>{{ facialExp.updated_at | date:"dd/MM/yyyy"}}</td>
+                        <td>
+                            <button mat-icon-button color="primary" aria-label="Edit" (click)="onEdit(content, facialExp)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" aria-label="Delete" (click)="onDelete(facialExp)">
+                                <mat-icon>delete</mat-icon>
+                            </button>                         
+                        </td>
+                    </tr>
+                </tbody>                
+            </table>
+        </section>          
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header" id="modal-campaign">
+      <h4 class="modal-title">{{ modalTitle }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="facialForm" class="facial-form">
+        <div class="form-container">
+            <mat-form-field appearance="legacy">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput formControlName="name" required>
+                <mat-error *ngIf="facialForm.controls['name'].invalid">{{getErrorMessage('name')}}</mat-error>  
+            </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Code</mat-label>
+                <input type="text" matInput formControlName="code" required oninput="this.value = this.value.toLowerCase()">
+                <mat-error *ngIf="facialForm.controls['code'].invalid">{{getErrorMessage('code')}}</mat-error>  
+            </mat-form-field>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <mat-spinner [hidden]="!isSavingData" diameter="35"></mat-spinner>
+        <button [hidden]="isSavingData" type="button" class="btn btn-outline-dark" (click)="onSave(modal)" [disabled]="!facialForm.valid">Save</button>
+    </div>
+</ng-template>
